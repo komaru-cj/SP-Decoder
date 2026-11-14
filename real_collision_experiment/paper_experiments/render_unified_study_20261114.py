@@ -43,11 +43,11 @@ def bar_comparison(ax,levels,groups,xlabel,title,ser=False):
     ax.set_xticks(x,levels);ax.set(xlabel=xlabel,ylabel='Mean target SER (%)' if ser else 'Target PDR (%)',title=title,ylim=(0,106));ax.set_yticks([0,25,50,75,100]);ax.grid(alpha=.15,axis='y',zorder=0)
 
 def curves(ax,levels,groups,xlabel,title,ser=False):
-    x=np.arange(len(levels))
+    x=np.asarray(levels,dtype=float) if all(isinstance(v,(int,float,np.number)) for v in levels) else np.arange(len(levels))
     for i,method in enumerate(METHODS):
         values=np.array([stats(g,method) for g in groups]);y,lo,hi,se=values.T
         if ser:ax.plot(x,se,marker=['o','s','^','D'][i],ms=3,color=COLORS[i],lw=1.8 if i==0 else 1.1,label=LABELS[i])
-        else:ax.errorbar(x,y,yerr=[y-lo,hi-y],marker=['o','s','^','D'][i],ms=3,color=COLORS[i],lw=1.8 if i==0 else 1.1,capsize=1,label=LABELS[i])
+        else:ax.errorbar(x,y,yerr=np.maximum([y-lo,hi-y],0),marker=['o','s','^','D'][i],ms=3,color=COLORS[i],lw=1.8 if i==0 else 1.1,capsize=1,label=LABELS[i])
     ax.set_xticks(x,levels);ax.set(xlabel=xlabel,ylabel='Mean target SER (%)' if ser else 'Target PDR (%)',title=title,ylim=(0,106));ax.set_yticks([0,25,50,75,100]);ax.grid(alpha=.15)
 
 def shared_legend(fig,ax):fig.legend(*ax.get_legend_handles_labels(),ncol=4,loc='upper center',bbox_to_anchor=(.5,1.10),frameon=False,fontsize=8)
