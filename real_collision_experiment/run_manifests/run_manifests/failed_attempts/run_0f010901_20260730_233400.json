@@ -1,0 +1,320 @@
+{
+  "schema": "sp_decode_real_collision_run_v1",
+  "created_utc": "2026-07-30T15:32:22.904017+00:00",
+  "experiment": {
+    "campaign": "fig9_12_v1",
+    "figure": "fig9_10",
+    "layout": "A",
+    "metric_group": "g0p5",
+    "round": "1",
+    "traffic_semantics": "aggregate_offered_load"
+  },
+  "config": {
+    "run_id": 251726081,
+    "active_mask": 32767,
+    "num_active_nodes": 15,
+    "phy_profile_id": 0,
+    "traffic_profile_id": 1,
+    "node_tx_power_dbm": 10,
+    "duration_ms": 120000,
+    "warmup_ms": 5000,
+    "global_seed": 959136956,
+    "payload_seed": 262901464,
+    "flags": 0,
+    "offered_load": 0.5
+  },
+  "active_nodes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "radio": {
+    "frequency_hz": 487700000,
+    "sample_rate_hz": 1000000,
+    "bandwidth_hz": 125000,
+    "spreading_factor": 10,
+    "coding_rate": "4/5",
+    "preamble_symbols": 8,
+    "explicit_header": true,
+    "phy_crc": true,
+    "sync_word": 52
+  },
+  "traffic": {
+    "data_payload_bytes": 20,
+    "packet_airtime_ms": 370.688,
+    "mean_idle_gap_ms": 10749.952,
+    "firmware_mean_idle_gap_ms": 10759
+  },
+  "expected_node_schedules": {
+    "1": {
+      "tx_count": 11,
+      "tx_start_ms_from_traffic_begin": [
+        8727,
+        26723,
+        55710,
+        56715,
+        71043,
+        76483,
+        87516,
+        94308,
+        106753,
+        107635,
+        115548
+      ]
+    },
+    "2": {
+      "tx_count": 7,
+      "tx_start_ms_from_traffic_begin": [
+        4054,
+        33069,
+        39655,
+        57730,
+        82442,
+        85477,
+        98251
+      ]
+    },
+    "3": {
+      "tx_count": 12,
+      "tx_start_ms_from_traffic_begin": [
+        7705,
+        8104,
+        8981,
+        13403,
+        46295,
+        55963,
+        66328,
+        73881,
+        77249,
+        92264,
+        100632,
+        119208
+      ]
+    },
+    "4": {
+      "tx_count": 13,
+      "tx_start_ms_from_traffic_begin": [
+        6221,
+        20994,
+        21858,
+        24761,
+        28072,
+        38351,
+        40139,
+        49494,
+        63999,
+        67474,
+        99948,
+        111910,
+        116212
+      ]
+    },
+    "5": {
+      "tx_count": 10,
+      "tx_start_ms_from_traffic_begin": [
+        6144,
+        25393,
+        31247,
+        56099,
+        71951,
+        74245,
+        95280,
+        105236,
+        116197,
+        119207
+      ]
+    },
+    "6": {
+      "tx_count": 10,
+      "tx_start_ms_from_traffic_begin": [
+        10517,
+        17338,
+        20714,
+        47837,
+        58374,
+        67903,
+        83542,
+        103315,
+        110048,
+        117886
+      ]
+    },
+    "7": {
+      "tx_count": 15,
+      "tx_start_ms_from_traffic_begin": [
+        9896,
+        11589,
+        12299,
+        14976,
+        23189,
+        35657,
+        37434,
+        42333,
+        50889,
+        53013,
+        97536,
+        107493,
+        111061,
+        113343,
+        116541
+      ]
+    },
+    "8": {
+      "tx_count": 12,
+      "tx_start_ms_from_traffic_begin": [
+        10536,
+        12058,
+        18224,
+        19917,
+        20897,
+        23941,
+        32285,
+        41832,
+        49137,
+        60743,
+        101419,
+        102220
+      ]
+    },
+    "9": {
+      "tx_count": 7,
+      "tx_start_ms_from_traffic_begin": [
+        3598,
+        15426,
+        21958,
+        70244,
+        74722,
+        90875,
+        108378
+      ]
+    },
+    "10": {
+      "tx_count": 14,
+      "tx_start_ms_from_traffic_begin": [
+        2234,
+        18911,
+        21814,
+        23853,
+        34482,
+        44413,
+        58838,
+        69266,
+        81565,
+        83836,
+        108814,
+        113196,
+        115457,
+        117814
+      ]
+    },
+    "11": {
+      "tx_count": 11,
+      "tx_start_ms_from_traffic_begin": [
+        67,
+        5511,
+        6326,
+        33256,
+        45683,
+        48453,
+        62449,
+        69433,
+        80470,
+        86356,
+        119786
+      ]
+    },
+    "12": {
+      "tx_count": 12,
+      "tx_start_ms_from_traffic_begin": [
+        6779,
+        16472,
+        32227,
+        35779,
+        39556,
+        46696,
+        59401,
+        77408,
+        83675,
+        88979,
+        98801,
+        101473
+      ]
+    },
+    "13": {
+      "tx_count": 13,
+      "tx_start_ms_from_traffic_begin": [
+        3729,
+        17100,
+        18156,
+        31784,
+        44987,
+        51329,
+        75264,
+        96566,
+        99286,
+        100069,
+        105781,
+        106876,
+        112590
+      ]
+    },
+    "14": {
+      "tx_count": 15,
+      "tx_start_ms_from_traffic_begin": [
+        2140,
+        7237,
+        14080,
+        15354,
+        42355,
+        43338,
+        52237,
+        56032,
+        57823,
+        60994,
+        83641,
+        87726,
+        94645,
+        101592,
+        102185
+      ]
+    },
+    "15": {
+      "tx_count": 10,
+      "tx_start_ms_from_traffic_begin": [
+        1727,
+        8117,
+        10424,
+        40928,
+        59072,
+        63084,
+        82533,
+        83918,
+        104185,
+        115192
+      ]
+    }
+  },
+  "control": {
+    "config_frame_hex": "5350010122000109010fff7f0f00010ac0d4010088130000bc442b39d88eab0fe759",
+    "config_crc16": 23015,
+    "config_repeat": 5,
+    "config_interval_s": 1.0,
+    "start_frame_hex": "535001020e010109010fe7596c00",
+    "usrp_device_args": "",
+    "usrp_tx_gain_db": 0.0,
+    "antenna": "TX/RX"
+  },
+  "events": []
+}

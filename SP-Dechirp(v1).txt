@@ -1,0 +1,1496 @@
+## 4. 符号投影解啁啾与有符号空间判决
+
+本章介绍 SP-Dechirp 的核心判决机制。SP-Dechirp 的核心是改变发生在接收端解啁啾后的双天线 FFT 判决域：接收机不再将双天线观测过早压缩为单一非负功率谱，而是同时保留目标信道方向上的支持证据和目标正交方向上的反证，并据此完成目标符号Top-1判决。
+
+### 4.1 目标条件化的双天线 FFT 观测
+
+考虑已由第 5 章前端检测到的目标包 $u$。前端为其提供包起始位置、CFO、STO、双天线信道及信道可靠性估计。对目标包第 $\ell$ 个 payload symbol，接收机读取目标对齐的双天线符号窗口，补偿频率和时间偏移，并乘以标准 LoRa downchirp。
+
+经过 folded FFT 后，第 $k$ 个 LoRa bin 的双天线观测写为
+
+$$
+\mathbf Y_{u,\ell}[k]
+=
+\sum_{v=1}^{U}
+\mathbf h_v
+A_{uv,\ell}[k]
++
+\mathbf N_{u,\ell}[k],
+$$
+
+其中 $A_{uv,\ell}[k]$ 表示包 $v$ 在以目标包 $u$ 为基准的窗口、CFO 补偿和 downchirp 下产生的标量频谱响应。对于目标包本身，在理想同步条件下，
+
+$$
+A_{uu,\ell}[k]
+\approx
+\begin{cases}
+C, & k=s_{u,\ell},\\
+0, & k\neq s_{u,\ell},
+\end{cases}
+$$
+
+其中 $s_{u,\ell}$ 为目标符号，$C$ 为 folded FFT 的相干增益。对非目标包，其响应由相对 STO、CFO、当前符号及窗口切分共同决定，可以集中于一个或多个 bins。
+
+在进入空间判决前，双天线观测经过射频链校准和噪声预白化。为简化符号，本章后续的 $\mathbf Y_{u,\ell}[k]$、$\mathbf h_v$ 和 $\mathbf N_{u,\ell}[k]$ 均表示预白化后的量，满足
+
+$$
+\mathbf N_{u,\ell}[k]
+\sim
+\mathcal{CN}
+\left(
+\mathbf0,\sigma^2\mathbf I_2
+\right).
+$$
+
+### 4.2 支持分支与反证分支
+
+根据前端估计的目标信道 $\hat{\mathbf h}_u$，构造目标单位方向
+
+$$
+\hat{\mathbf a}_u
+=
+\frac{
+\hat{\mathbf h}_u
+}{
+\|\hat{\mathbf h}_u\|
+}.
+$$
+
+在二维复空间中，其正交单位方向可以写为
+
+$$
+\hat{\mathbf b}_u
+=
+\begin{bmatrix}
+-\hat a_{u,2}^*\\
+\hat a_{u,1}^*
+\end{bmatrix},
+$$
+
+并满足
+
+$$
+\hat{\mathbf b}_u^H\hat{\mathbf a}_u=0,
+\qquad
+\|\hat{\mathbf b}_u\|=1.
+$$
+
+对每个 FFT bin，SP-Dechirp 构造两路复数证据：
+
+$$
+P_{u,\ell}[k]
+=
+\hat{\mathbf a}_u^H
+\mathbf Y_{u,\ell}[k],
+$$$$
+Q_{u,\ell}[k]
+=
+\hat{\mathbf b}_u^H
+\mathbf Y_{u,\ell}[k].
+$$
+
+$P_{u,\ell}[k]$ 是目标对齐分支。当该 bin 来自目标包时，其空间向量应主要投影到该分支。
+
+$Q_{u,\ell}[k]$ 是目标阻塞分支。若信道估计准确，理想目标信号在该分支中应被完全消除；因此，该分支中的显著能量构成“该 bin 不属于目标”的反证。
+
+SP-Dechirp 定义有符号判决谱
+
+$$
+\boxed{
+D_{u,\ell}[k]
+=
+|P_{u,\ell}[k]|^2
+-
+\lambda_u
+|Q_{u,\ell}[k]|^2,
+}
+$$
+
+其中 $\lambda_u\geq0$ 为目标包级反证权重。最终符号直接由
+
+$$
+\boxed{
+\hat s_{u,\ell}
+=
+\arg\max_k
+D_{u,\ell}[k]
+}
+$$
+
+给出。
+
+SP-Dechirp 不需要 MRC 提供候选，也不依赖 SIC、干扰重构或跨符号候选组合。
+
+### 4.3 二次型与空间一致性解释
+
+定义 Hermitian 判决矩阵
+
+$$
+\mathbf W_u(\lambda_u)
+=
+\hat{\mathbf a}_u\hat{\mathbf a}_u^H
+-
+\lambda_u
+\hat{\mathbf b}_u\hat{\mathbf b}_u^H.
+$$
+
+则
+
+$$
+D_{u,\ell}[k]
+=
+\mathbf Y_{u,\ell}^H[k]
+\mathbf W_u(\lambda_u)
+\mathbf Y_{u,\ell}[k].
+$$
+
+矩阵 $\mathbf W_u$ 在目标方向上的特征值为 $1$，在目标正交方向上的特征值为 $-\lambda_u$。因此，$D_{u,\ell}[k]$ 不是非负功率，而是一个不定二次型：目标方向能量被保留，正交方向能量被赋予负极性。
+
+为了获得可调控的有界阈值，定义
+
+$$
+t_u
+=
+\frac{\lambda_u}{1+\lambda_u},
+\qquad
+0\leq t_u<1.
+$$
+
+由于 $\lambda_u$ 是与 FFT bin 无关的包级正的常数，最终符号判决等价于最大化
+
+$$
+S_{u,\ell}[k]
+=
+\frac{
+D_{u,\ell}[k]
+}{
+1+\lambda_u
+}.
+$$
+
+利用
+
+$$
+\|\mathbf Y_{u,\ell}[k]\|^2
+=
+|P_{u,\ell}[k]|^2
++
+|Q_{u,\ell}[k]|^2,
+$$
+
+可得
+
+$$
+S_{u,\ell}[k]
+=
+|P_{u,\ell}[k]|^2
+-
+t_u
+\|\mathbf Y_{u,\ell}[k]\|^2.
+$$
+
+定义总能量
+
+$$
+E_{u,\ell}[k]
+=
+\|\mathbf Y_{u,\ell}[k]\|^2
+$$
+
+和目标空间一致性
+
+$$
+\xi_{u,\ell}[k]
+=
+\frac{
+|\hat{\mathbf a}_u^H\mathbf Y_{u,\ell}[k]|^2
+}{
+\|\mathbf Y_{u,\ell}[k]\|^2
+},
+$$
+
+则
+
+$$
+\boxed{
+S_{u,\ell}[k]
+=
+E_{u,\ell}[k]
+\left(
+\xi_{u,\ell}[k]-t_u
+\right).
+}
+$$
+
+因此，$t_u$ 可以解释为目标空间一致性阈值。一个 FFT bin 只有在其空间一致性高于 $t_u$ 时，才获得正的归一化分数；否则，其能量越强，负惩罚越大。
+
+传统 MRC 的 score 为
+
+$$
+M_{u,\ell}[k]
+=
+E_{u,\ell}[k]\xi_{u,\ell}[k].
+$$
+
+MRC 只衡量目标方向上的支持能量，而不判断该 bin 的总能量中有多少与目标空间方向矛盾。SP-Dechirp 在 MRC 基础上减去 $t_uE_{u,\ell}[k]$，从而将总能量与空间一致性联合写入 symbol ranking。
+
+在一个对角复高斯判决模型下，若目标 bin 具有更高的目标方向方差和更低的正交方向方差，而非目标 bin 具有相反统计特征，则目标与非目标假设之间的对数似然比可以写为
+
+$$
+c_P|P[k]|^2-c_Q|Q[k]|^2+C,
+$$
+
+其中 $c_P,c_Q>0$。忽略与 bin 无关的常数并进行正比例归一化后，即得到 SP-Dechirp 的有符号二次型。因此，SP-Dechirp 也可以视为目标方向支持和正交方向反证之间的二次判别统计量，而不是经验性的峰值相减。
+
+### 4.4 精确的 Top-1 margin 条件
+
+设目标包当前真实符号为 $s=s_{u,\ell}$。定义目标 bin 与错误 bin $k$ 之间的判决 margin：
+
+$$
+\Delta_{u,\ell,k}(\lambda_u)
+=
+D_{u,\ell}[s]
+-
+D_{u,\ell}[k].
+$$
+
+将其展开得到
+
+$$
+\Delta_{u,\ell,k}(\lambda_u)
+=
+A_{u,\ell,k}
++
+\lambda_uB_{u,\ell,k},
+$$
+
+其中
+
+$$
+A_{u,\ell,k}
+=
+|P_{u,\ell}[s]|^2
+-
+|P_{u,\ell}[k]|^2
+$$
+
+是传统 MRC margin，而
+
+$$
+B_{u,\ell,k}
+=
+|Q_{u,\ell}[k]|^2
+-
+|Q_{u,\ell}[s]|^2
+$$
+
+表示错误 bin 相对于正确 bin 的正交反证优势。
+
+**定理 1：精确的竞争 bin 修复条件。**  
+对于任意错误 bin $k$，SP-Dechirp 将目标 bin 排在该错误 bin 之前，当且仅当
+
+$$
+A_{u,\ell,k}
++
+\lambda_uB_{u,\ell,k}
+>0.
+$$
+
+若 MRC 判决错误，即 $A_{u,\ell,k}<0$，但错误 bin 具有更强的正交反证，即 $B_{u,\ell,k}>0$，则 SP-Dechirp 修复该错误的充分必要条件为
+
+$$
+\lambda_u
+>
+\frac{
+-A_{u,\ell,k}
+}{
+B_{u,\ell,k}
+}.
+$$
+
+该条件不要求错误 bin 的最终 signed score 为负。只要反证项足以翻转正确 bin 与错误 bin 的相对次序，SP-Dechirp 即可恢复正确 Top-1。
+
+为了同时超过所有错误 bins，$\lambda_u$ 必须满足
+
+$$
+A_{u,\ell,k}
++
+\lambda_uB_{u,\ell,k}
+>0,
+\qquad
+\forall k\neq s.
+$$
+
+对应的精确可行区间为
+
+$$
+\lambda_{u,\ell}^{\mathrm{low}}
+=
+\max_{k:B_{u,\ell,k}>0}
+\left[
+-\frac{
+A_{u,\ell,k}
+}{
+B_{u,\ell,k}
+}
+\right]_+,
+$$$$
+\lambda_{u,\ell}^{\mathrm{high}}
+=
+\min_{k:B_{u,\ell,k}<0}
+\frac{
+A_{u,\ell,k}
+}{
+-B_{u,\ell,k}
+}.
+$$
+
+若某个 $B_{u,\ell,k}=0$，则必须有 $A_{u,\ell,k}>0$。当
+
+$$
+\lambda_{u,\ell}^{\mathrm{low}}
+<
+\lambda_{u,\ell}^{\mathrm{high}},
+$$
+
+存在一个反证权重使目标 bin 成为全局 Top-1。
+
+该定理直接作用于碰撞后的实际 FFT 向量，因此所有多用户相干叠加和交叉项均已包含在 $P$ 和 $Q$ 中，不需要假设不同干扰之间相互独立。
+
+### 4.5 单源空间模型及 near-far 容忍度
+
+为了建立信道几何与 Top-1 margin 的关系，考虑一个目标 bin 主要由目标包 $u$ 贡献，而一个错误 bin 主要由干扰包 $v$ 贡献的情况。
+
+定义真实目标方向相对于估计方向的可靠性
+
+$$
+r_u
+=
+\frac{
+|\hat{\mathbf a}_u^H\mathbf h_u|^2
+}{
+\|\mathbf h_u\|^2
+},
+$$
+
+以及目标估计方向与干扰信道之间的相干度
+
+$$
+\rho_{uv}
+=
+\frac{
+|\hat{\mathbf a}_u^H\mathbf h_v|^2
+}{
+\|\mathbf h_v\|^2
+}.
+$$
+
+设目标和干扰在对应 FFT bin 中的总能量分别为 $E_u$ 和 $E_v$，则
+
+$$
+D_u[s]
+=
+E_u
+\left[
+r_u-\lambda_u(1-r_u)
+\right],
+$$$$
+D_u[k]
+=
+E_v
+\left[
+\rho_{uv}
+-
+\lambda_u(1-\rho_{uv})
+\right].
+$$
+
+目标—干扰 margin 为
+
+$$
+\Delta_{uv}(\lambda_u)
+=
+A_{uv}
++
+\lambda_uB_{uv},
+$$
+
+其中
+
+$$
+A_{uv}
+=
+E_ur_u-E_v\rho_{uv},
+$$$$
+B_{uv}
+=
+E_v(1-\rho_{uv})
+-
+E_u(1-r_u).
+$$
+
+$A_{uv}$ 是 MRC margin。若 $A_{uv}<0$，MRC 将选择干扰峰。
+
+$B_{uv}$ 是正交反证优势。只有在
+
+$$
+B_{uv}>0
+$$
+
+时，提高 $\lambda_u$ 才会改善该目标—干扰对的判决 margin。
+
+当 $A_{uv}<0$ 且 $B_{uv}>0$ 时，SP-Dechirp 修复该 MRC 错误所需的最小权重为
+
+$$
+\boxed{
+\lambda_{uv}^{\mathrm{flip}}
+=
+\frac{
+E_v\rho_{uv}-E_ur_u
+}{
+E_v(1-\rho_{uv})
+-
+E_u(1-r_u)
+}.
+}
+$$
+
+该修复阈值通常小于将干扰 score 完全变成负值所需的
+
+$$
+\lambda_{uv}^{\mathrm{negative}}
+=
+\frac{
+\rho_{uv}
+}{
+1-\rho_{uv}
+}.
+$$
+
+因此，SP-Dechirp 的有效工作区间不仅包括干扰完全负化区域，也包括更广泛的 soft contradiction 区域。
+
+若干扰 score 仍为正，即
+
+$$
+\rho_{uv}
+-
+\lambda_u(1-\rho_{uv})
+>0,
+$$
+
+则无噪声下的 near-far 解码条件为
+
+$$
+\frac{E_v}{E_u}
+<
+\frac{
+r_u-\lambda_u(1-r_u)
+}{
+\rho_{uv}
+-
+\lambda_u(1-\rho_{uv})
+}.
+$$
+
+相比 MRC 的条件
+
+$$
+\frac{E_v}{E_u}
+<
+\frac{r_u}{\rho_{uv}},
+$$
+
+只要 $r_u>\rho_{uv}$ 且 $\lambda_u>0$，SP-Dechirp 可以提高可容忍的干扰功率。
+
+当
+
+$$
+\lambda_u
+>
+\frac{
+\rho_{uv}
+}{
+1-\rho_{uv}
+},
+$$
+
+干扰 score 变为负值。在无噪声且目标 score 为正的单源模型中，此时干扰功率不再构成 top-1 上界。
+
+与此同时，目标 score 保持正值要求
+
+$$
+\lambda_u
+<
+\frac{
+r_u
+}{
+1-r_u
+}.
+$$
+
+因此，完整的单源极性分离区间为
+
+$$
+\frac{
+\rho_{uv}
+}{
+1-\rho_{uv}
+}
+<
+\lambda_u
+<
+\frac{
+r_u
+}{
+1-r_u
+},
+$$
+
+其存在的充要条件为
+
+$$
+\rho_{uv}<r_u.
+$$
+
+当 $\rho_{uv}\rightarrow1$ 时，干扰正交能量趋近于零，所需 $\lambda_u$ 趋于无穷大。若目标与干扰的双天线信道严格共线，则任何仅依赖二维空间方向的 signed detector 都无法改变两者的相对空间分数。
+
+### 4.6 任意多干扰下的聚合一致性
+
+单源相干度 $\rho_{uv}$ 便于解释空间几何，但真实错误 bin 可能同时包含多个干扰包。令去噪后的聚合 FFT 向量为
+
+$$
+\boldsymbol\mu_{u,\ell}[k]
+=
+\sum_v
+\mathbf h_vA_{uv,\ell}[k].
+$$
+
+定义聚合能量和聚合空间一致性
+
+$$
+E_{u,\ell}^{(0)}[k]
+=
+\|\boldsymbol\mu_{u,\ell}[k]\|^2,
+$$$$
+\xi_{u,\ell}^{(0)}[k]
+=
+\frac{
+|\hat{\mathbf a}_u^H
+\boldsymbol\mu_{u,\ell}[k]|^2
+}{
+\|\boldsymbol\mu_{u,\ell}[k]\|^2
+}.
+$$
+
+则归一化 signed score 精确为
+
+$$
+S_{u,\ell}^{(0)}[k]
+=
+E_{u,\ell}^{(0)}[k]
+\left[
+\xi_{u,\ell}^{(0)}[k]-t_u
+\right].
+$$
+
+**定理 2：聚合 bin 极性条件。**  
+若目标 bin 满足
+
+$$
+\xi_{u,\ell}^{(0)}[s]>t_u
+$$
+
+且所有错误 bins 满足
+
+$$
+\xi_{u,\ell}^{(0)}[k]<t_u,
+\qquad
+k\neq s,
+$$
+
+则
+
+$$
+D_{u,\ell}[s]>0>D_{u,\ell}[k],
+\qquad
+\forall k\neq s,
+$$
+
+因此 $\hat s_{u,\ell}=s$，且该结论与各错误 bin 的绝对能量无关。
+
+该结果完整包含了多干扰交叉项，但也揭示了 SP-Dechirp 的另一项边界：两个或多个干扰信道向量的相干组合可能恰好朝向目标信道，使错误 bin 的聚合一致性高于任一单独干扰的相干度。因此，包间两两相干度只能用于 packet-level 参数初始化，不能单独构成多干扰场景的确定性保证。
+
+### 4.7 信道不确定性与可靠极性区间
+
+前端输出目标信道方向 $\hat{\mathbf a}_u$ 以及角度不确定性 $\theta_u$。定义复信道方向之间的主角距离
+
+$$
+\theta(\mathbf x,\mathbf y)
+=
+\arccos
+\frac{
+|\mathbf x^H\mathbf y|
+}{
+\|\mathbf x\|\|\mathbf y\|
+}.
+$$
+
+若真实目标方向位于以 $\hat{\mathbf a}_u$ 为中心、半径为 $\theta_u$ 的置信锥内，则目标可靠性满足
+
+$$
+r_u
+\geq
+L_u
+=
+\cos^2\theta_u.
+$$
+
+对已检测干扰包 $v$，设其估计方向为 $\hat{\mathbf a}_v$，角度不确定性为 $\theta_v$。定义估计方向间夹角
+
+$$
+\hat\theta_{uv}
+=
+\arccos
+|\hat{\mathbf a}_u^H\hat{\mathbf a}_v|.
+$$
+
+根据主角距离的三角关系，干扰真实方向相对于目标检测方向的相干度满足上界
+
+$$
+\rho_{uv}
+\leq
+U_{uv}
+=
+\cos^2
+\left(
+[\hat\theta_{uv}-\theta_v]_+
+\right),
+$$
+
+其中 $[x]_+=\max(x,0)$。
+
+令
+
+$$
+U_u
+=
+\max_{v\neq u}U_{uv}.
+$$
+
+若
+
+$$
+U_u<L_u,
+$$
+
+则存在可靠极性区间
+
+$$
+U_u<t_u<L_u.
+$$
+
+在只考虑方向不确定性的 max-min 准则下，最优闭式阈值为
+
+$$
+\boxed{
+t_u^{\mathrm{mid}}
+=
+\frac{
+L_u+U_u
+}{2},
+}
+$$
+
+对应
+
+$$
+\boxed{
+\lambda_u^{\mathrm{mid}}
+=
+\frac{
+L_u+U_u
+}{
+2-L_u-U_u
+}.
+}
+$$
+
+该阈值使目标方向的最小正 margin
+
+$$
+L_u-t_u
+$$
+
+与干扰方向的最小负 margin
+
+$$
+t_u-U_u
+$$
+
+相等，最大化二者中的较小值。
+
+若 $U_u\geq L_u$，则基于当前信道估计无法给出目标为正且所有干扰为负的可靠保证。SP-Dechirp 仍可通过 soft contradiction 改善 top-1，但此时应将该包标记为 uncertified，而不能声称满足极性分离定理。
+
+### 4.8 噪声影响与风险约束的反证权重
+
+考虑一个 clean FFT bin $\boldsymbol\mu$ 和白噪声
+
+$$
+\mathbf n
+\sim
+\mathcal{CN}
+\left(
+\mathbf0,\sigma^2\mathbf I_2
+\right).
+$$
+
+令
+
+$$
+E=\|\boldsymbol\mu\|^2,
+$$$$
+c=
+\frac{
+|\hat{\mathbf a}_u^H\boldsymbol\mu|^2
+}{E}.
+$$
+
+则 signed score 的均值为
+
+$$
+\mathbb E[D]
+=
+E
+\left[
+c-\lambda_u(1-c)
+\right]
++
+(1-\lambda_u)\sigma^2,
+$$
+
+方差为
+
+$$
+\operatorname{Var}[D]
+=
+\sigma^4(1+\lambda_u^2)
++
+2\sigma^2E
+\left[
+c+\lambda_u^2(1-c)
+\right].
+$$
+
+噪声均值项对所有 FFT bins 相同，不改变平均 ranking；但方差随 $\lambda_u$ 增大，表明强反证权重会提高随机错误峰的波动。
+
+对一个目标 bin 和一个竞争 bin，定义
+
+$$
+A
+=
+E_ur_u-E_v\rho_{uv},
+$$$$
+B
+=
+E_v(1-\rho_{uv})
+-
+E_u(1-r_u).
+$$
+
+其 signed margin 的均值和方差分别为
+
+$$
+\mathbb E[\Delta]
+=
+A+B\lambda_u,
+$$$$
+\operatorname{Var}[\Delta]
+=
+C_0+C_2\lambda_u^2,
+$$
+
+其中
+
+$$
+C_0
+=
+2\sigma^4
++
+2\sigma^2
+\left(
+E_ur_u+E_v\rho_{uv}
+\right),
+$$$$
+C_2
+=
+2\sigma^4
++
+2\sigma^2
+\left[
+E_u(1-r_u)
++
+E_v(1-\rho_{uv})
+\right].
+$$
+
+定义标准化 margin
+
+$$
+J_{uv}(\lambda_u)
+=
+\frac{
+A+B\lambda_u
+}{
+\sqrt{
+C_0+C_2\lambda_u^2
+}
+}.
+$$
+
+当 $A>0$ 且 $B>0$ 时，单竞争 bin 模型下的驻点为
+
+$$
+\lambda_{uv}^{\mathrm{stat}}
+=
+\frac{
+BC_0
+}{
+AC_2
+}.
+$$
+
+当 $A\leq0$ 且 $B>0$ 时，增大 $\lambda_u$ 可以修复 MRC margin，但最终权重必须受目标信道可靠性和噪声约束限制。当 $B\leq0$ 时，提高正交惩罚不会改善该竞争 bin。
+
+系统针对目标包 $u$ 使用前端估计的功率、信道置信区间和噪声方差，构造保守的 margin 参数
+
+$$
+\underline A_{uv}
+=
+\hat E_uL_u-\hat E_vU_{uv},
+$$$$
+\underline B_{uv}
+=
+\hat E_v(1-U_{uv})
+-
+\hat E_u(1-L_u).
+$$
+
+反证权重通过以下一维 max-min 问题确定：
+
+$$
+\boxed{
+\lambda_u^\star
+=
+\arg\max_{
+0\leq\lambda\leq\lambda_{u,\mathrm{cap}}
+}
+\min_{v\neq u}
+\frac{
+\underline A_{uv}
++
+\lambda\underline B_{uv}
+}{
+\sqrt{
+\overline C_{0,uv}
++
+\lambda^2\overline C_{2,uv}
+}
+}.
+}
+$$
+
+$\lambda_{u,\mathrm{cap}}$ 由目标可靠性和最低目标 margin 决定。若要求目标单源系数至少为 $\gamma_u>0$，则
+
+$$
+L_u-\lambda_{u,\mathrm{cap}}(1-L_u)
+\geq\gamma_u,
+$$
+
+即
+
+$$
+\lambda_{u,\mathrm{cap}}
+\leq
+\frac{
+L_u-\gamma_u
+}{
+1-L_u
+}.
+$$
+
+该优化仅在每个检测包建立时执行一次，是一个有界一维问题，不涉及 payload symbol 候选搜索。实际实现可以在区间边界、各目标—干扰对的 $\lambda^{\mathrm{flip}}$、$\lambda^{\mathrm{stat}}$ 及少量固定检查点上求值，其计算量相对于一个 LoRa FFT 可以忽略。
+
+### 4.9 解调流程与复杂度
+
+对目标包 $u$ 的每个 payload symbol，SP-Dechirp 执行：
+
+1. 根据目标 start、STO 和 CFO 读取并补偿双天线窗口；
+2. 使用标准 downchirp 完成双天线 folded FFT，得到 $\mathbf Y_{u,\ell}[k]$；
+3. 计算目标支持谱 $P_{u,\ell}[k]$；
+4. 计算目标正交反证谱 $Q_{u,\ell}[k]$；
+5. 根据包级参数 $\lambda_u^\star$ 构造 $D_{u,\ell}[k]$；
+6. 直接取 $\arg\max_kD_{u,\ell}[k]$。
+
+由于空间投影是线性操作，两路 FFT 可以通过先投影后 FFT 或先双天线 FFT 后投影实现。每个目标 symbol 的主要复杂度为两路长度为 $M$ 的 FFT，整体为
+
+$$
+O(M\log M).
+$$
+
+反证权重仅在包级更新，不随 FFT bin 或 symbol candidate 进行迭代。SP-Dechirp 不重构干扰包、不执行 SIC，也不需要在多个 symbol 候选组合之间搜索。
+
+## 5. 并发数据包获取与可靠性估计
+
+SP-Dechirp 的符号判决需要一组目标包级参数：连续包起点、连续 CFO、双天线信道方向、信道可靠性、干扰相干度上界以及噪声功率。本章给出与 SP-Dechirp 配套的并发数据包获取前端。该前端不在检测阶段分离 payload，也不重构干扰，而是为每个可检测包建立一个带可靠性度量的 target-conditioned parameter set：
+
+$$
+\mathcal P_u
+=
+\left\{
+\hat t_u,
+\hat\epsilon_u,
+\hat{\mathbf h}_u,
+L_u,
+\{U_{uv}\}_{v\neq u},
+\hat\sigma^2,
+\lambda_u^\star
+\right\}.
+$$
+
+其中 $\hat t_u$ 为连续包起点，它吸收整数 start 与分数采样偏移；$\hat\epsilon_u$ 为连续 CFO；$\hat{\mathbf h}_u$ 为双天线复信道；$L_u$ 为目标信道方向可靠性下界；$U_{uv}$ 为干扰信道相干度上界；$\lambda_u^\star$ 为第 4 章 signed spectrum 使用的包级反证权重。
+
+并发 LoRa 前端面临两个核心困难。第一，弱包前导可能被强包或 payload 峰掩盖，单天线检测容易漏检。第二，LoRa 的 start 与 CFO 在 dechirp FFT 中耦合，局部峰值最大化可能沿 start/CFO 斜脊漂移。为此，本文采用“多流前导获取 + 帧结构约束精修 + 鲁棒信道可靠性估计”的流程。
+
+### 5.1 校准与预白化
+
+双天线原始观测写为
+
+$$
+\mathbf y_{\mathrm{raw}}[n]
+=
+\mathbf C
+\sum_v
+\mathbf h_vx_v[n]
++
+\mathbf n_{\mathrm{raw}}[n],
+$$
+
+其中
+
+$$
+\mathbf C
+=
+\begin{bmatrix}
+c_1&0\\
+0&c_2
+\end{bmatrix}
+$$
+
+表示两条射频链的固定复增益和相位响应差异。接收机首先补偿射频链响应并去除直流分量：
+
+$$
+\tilde{\mathbf y}[n]
+=
+\hat{\mathbf C}^{-1}\mathbf y_{\mathrm{raw}}[n]
+-
+\frac{1}{N}\sum_{m=0}^{N-1}
+\hat{\mathbf C}^{-1}\mathbf y_{\mathrm{raw}}[m].
+$$
+
+随后在背景窗口 $\mathcal N_0$ 上估计噪声协方差
+
+$$
+\hat{\mathbf R}_n
+=
+\frac{1}{|\mathcal N_0|}
+\sum_{n\in\mathcal N_0}
+\tilde{\mathbf y}[n]\tilde{\mathbf y}^{H}[n],
+$$
+
+并得到预白化观测
+
+$$
+\bar{\mathbf y}[n]
+=
+\hat{\mathbf R}_n^{-1/2}\tilde{\mathbf y}[n].
+$$
+
+第 4 章中的信道相干度、正交方向和 signed quadratic form 均在预白化空间中定义。这样可以避免某一接收链的噪声或增益不平衡被误解释为目标正交方向能量。
+
+### 5.2 多流前导获取
+
+LoRa preamble 由重复 upchirps 构成。对正确的 symbol 对齐窗口，乘以 downchirp 后，同一包的多个 preamble symbols 会在 FFT 中形成稳定的 bin 轨道。为提高弱包可见性，接收机构造检测投影集合
+
+$$
+\mathcal V_{\mathrm{det}}
+=
+\left\{
+\mathbf e_1,
+\mathbf e_2,
+\mathbf q_1,
+\mathbf q_2
+\right\},
+$$
+
+其中 $\mathbf e_1,\mathbf e_2$ 为原始双天线分支，$\mathbf q_1,\mathbf q_2$ 为观测协方差
+
+$$
+\hat{\mathbf R}_y
+=
+\frac{1}{N}
+\sum_{n=0}^{N-1}
+\bar{\mathbf y}[n]\bar{\mathbf y}^{H}[n]
+$$
+
+的两个单位特征向量。每个投影产生一个标量检测流
+
+$$
+z_{\mathbf v}[n]
+=
+\mathbf v^H\bar{\mathbf y}[n],
+\qquad
+\mathbf v\in\mathcal V_{\mathrm{det}}.
+$$
+
+对每个滑动窗口和每个检测流，接收机执行 LoRa dechirp FFT：
+
+$$
+Z_{r,p}[k]
+=
+\operatorname{FFT}_M
+\left(
+z_r[n]d^*[n]
+\right),
+$$
+
+其中 $d[n]$ 为标准 upchirp，$M=2^{\mathrm{SF}}$。过采样信号使用与 LoRa 解调一致的 $M$ 点 FFT 分支，而不是对 OSR 个采样进行简单求和。
+
+令
+
+$$
+\eta_{r,p}[k]
+=
+\frac{|Z_{r,p}[k]|^2}
+{\operatorname{median}_{j}|Z_{r,p}[j]|^2+\varepsilon}
+$$
+
+表示局部峰值强度。若同一 bin 在多个投影流和多个 preamble 窗口中重复出现，则形成一个前导轨道。定义 hit 集合
+
+$$
+\mathcal H_k
+=
+\left\{(r,p):
+ k\in\operatorname{TopK}(|Z_{r,p}[\cdot]|^2)
+\right\}.
+$$
+
+前导轨道得分为
+
+$$
+\Gamma_{\mathrm{trk}}(k)
+=
+\operatorname{median}
+\left(
+\{\eta_{r,p}[k]\}_{(r,p)\in\mathcal H_k}
+\right)
+\cdot
+\sqrt{|\mathcal H_k|}
+\cdot
+\frac{|\mathcal H_k|}{|\mathcal V_{\mathrm{det}}|N_{\mathrm{pre}}}.
+$$
+
+该得分同时鼓励高峰值、跨 symbol 重复性和跨空间投影一致性。随后，接收机对频域近邻轨道和时间近邻轨道执行非极大值抑制，得到粗候选集合
+
+$$
+\mathcal C
+=
+\left\{
+(\hat n_u^{(0)},\hat\epsilon_u^{(0)},\Gamma_u^{\mathrm{trk}})
+\right\}_u.
+$$
+
+### 5.3 帧结构验证
+
+仅有重复 FFT 峰不足以确认完整 LoRa 帧。对每个粗候选，接收机根据 $\hat n_u^{(0)}$ 和 $\hat\epsilon_u^{(0)}$ 预测 preamble、sync word、SFD 和 payload 起点，并计算结构一致性得分。
+
+sync word 得分为
+
+$$
+\Gamma_u^{\mathrm{sync}}
+=
+\operatorname{median}_{i=1,2}
+\frac{
+\max_{k\in\mathcal B_{\mathrm{sync},i}}|Y_i[k]|^2
+}{
+\operatorname{median}_{j}|Y_i[j]|^2+\varepsilon
+},
+$$
+
+SFD 得分为
+
+$$
+\Gamma_u^{\mathrm{SFD}}
+=
+\operatorname{median}_{i=1,2}
+\frac{
+\max_{k\in\mathcal B_{\mathrm{SFD},i}}|Y_i^{\mathrm{down}}[k]|^2
+}{
+\operatorname{median}_{j}|Y_i^{\mathrm{down}}[j]|^2+\varepsilon
+}.
+$$
+
+综合候选置信度写为
+
+$$
+\Gamma_u^{\mathrm{cand}}
+=
+\Gamma_u^{\mathrm{trk}}
+\sqrt{\max(\Gamma_u^{\mathrm{sync}},1)}
+\sqrt{\max(\Gamma_u^{\mathrm{SFD}},1)}
+\sqrt{N_{\mathrm{hit},u}}.
+$$
+
+由于并发碰撞会污染 sync 和 SFD，结构得分不作为唯一硬门限，而作为候选排序和后续同步精修的约束项。该设计保留弱包召回，同时抑制由 payload 峰或短时拍频造成的伪轨道。
+
+### 5.4 连续起点与 CFO 精修
+
+LoRa dechirp FFT 中，start 偏差和 CFO 都会造成峰值 bin 偏移，近似满足
+
+$$
+\Delta k
+\approx
+\frac{\Delta n}{\mathrm{OSR}}.
+$$
+
+因此，同步精修必须避免在 start/CFO 斜脊上无约束漂移。本文采用两步精修，并最终以连续包起点 $\hat t_u$ 表示整数 start 与分数采样偏移。
+
+首先固定粗 CFO，只搜索 start：
+
+$$
+\hat n_u^{\mathrm{fix}}
+=
+\arg\max_n
+\Gamma^{\mathrm{frame}}(n,\hat\epsilon_u^{(0)}).
+$$
+
+随后在局部窗口中联合更新 start 和 CFO，得到
+
+$$
+(\hat n_u^{\mathrm{ref}},\hat\epsilon_u^{\mathrm{ref}}).
+$$
+
+该更新必须满足一致性约束
+
+$$
+|\hat\epsilon_u^{\mathrm{ref}}-\hat\epsilon_u^{(0)}|
+\leq
+\Delta_{\epsilon}^{\mathrm{ref}},
+$$
+
+并且 refined start 的帧结构得分不低于 fixed-CFO 结果。若该条件不满足，则保留粗候选。
+
+接着利用 preamble upchirp 和 SFD downchirp 的峰值关系估计 CFO 与时间偏移的耦合量。理想情况下，二者满足
+
+$$
+s_{\mathrm{up},u}
+=
+(L_{\mathrm{CFO},u}+L_{\mathrm{STO},u})\bmod M,
+$$
+
+$$
+s_{\mathrm{down},u}
+=
+(L_{\mathrm{CFO},u}-L_{\mathrm{STO},u})\bmod M.
+$$
+
+因此
+
+$$
+\hat L_{\mathrm{CFO},u}
+=
+\frac{1}{2}
+\Gamma_M[(s_{\mathrm{up},u}+s_{\mathrm{down},u})\bmod M],
+$$
+
+$$
+\hat L_{\mathrm{STO},u}
+=(s_{\mathrm{up},u}-\hat L_{\mathrm{CFO},u})\bmod M.
+$$
+
+上述关系用于给出 SFD-anchor 的连续起点修正。最后，在小范围分数采样网格中估计残余分数偏移，并由跨 preamble 相干性估计分数 CFO。最终同步参数写为
+
+$$
+\hat\epsilon_u
+=
+\hat L_{\mathrm{CFO},u}+\hat\lambda_{\mathrm{CFO},u},
+\qquad
+\hat t_u
+=
+\hat n_u+\hat\delta_u,
+$$
+
+其中 $\hat\delta_u$ 为最终保留的分数采样偏移。payload 窗口以 $\hat t_u$ 读取，并使用连续 CFO $\hat\epsilon_u$ 补偿，以减少邻频扩散对目标方向谱和正交方向谱的影响。
+
+### 5.5 鲁棒双天线信道估计
+
+完成同步后，每个可用 preamble symbol 在目标 bin 附近提供一个双天线信道 snapshot。对第 $p$ 个 snapshot，接收机从连续起点 $\hat t_u$ 对齐的窗口中计算
+
+$$
+\mathbf z_{u,p}
+=
+ e^{-j2\pi\hat\lambda_{\mathrm{CFO},u}p}
+\sum_{q=-Q}^{Q}
+ c_q
+\mathbf Y_{u,p}[\hat k_u+q],
+$$
+
+其中 $c_q$ 为局部谱泄漏补偿权重。由于部分 preamble snapshots 可能被其他包污染，直接平均会偏向干扰方向。本文首先计算频谱隔离度
+
+$$
+\iota_{u,p}
+=
+\frac{
+\sum_{q=-Q}^{Q}\|\mathbf Y_{u,p}[\hat k_u+q]\|^2
+}{
+\sum_{k=0}^{M-1}\|\mathbf Y_{u,p}[k]\|^2+\varepsilon
+}.
+$$
+
+然后用隔离度和方向残差构造鲁棒权重
+
+$$
+w_{u,p}
+=
+w_{\mathrm{iso}}(\iota_{u,p})
+\cdot
+\exp
+\left[-
+\left(
+\frac{\theta(\mathbf z_{u,p},\tilde{\mathbf h}_u)}{\theta_0}
+\right)^2
+\right],
+$$
+
+其中 $\tilde{\mathbf h}_u$ 为初始加权均值。最终信道估计为
+
+$$
+\boxed{
+\hat{\mathbf h}_u
+=
+\frac{
+\sum_p w_{u,p}\mathbf z_{u,p}
+}{
+\sum_p w_{u,p}
+}.
+}
+$$
+
+并定义
+
+$$
+\hat{\mathbf a}_u
+=
+\frac{\hat{\mathbf h}_u}{\|\hat{\mathbf h}_u\|},
+\qquad
+\hat E_u
+=
+\|\hat{\mathbf h}_u\|^2.
+$$
+
+$\hat{\mathbf a}_u$ 用于构造 SP-Dechirp 的目标方向和正交方向，$\hat E_u$ 用于后续可靠性约束。
+
+### 5.6 信道方向可靠性
+
+SP-Dechirp 的反证项依赖目标信道方向。如果 $\hat{\mathbf a}_u$ 不可靠，过大的正交惩罚可能把目标自身泄漏误判为反证。因此，前端需要输出信道方向可靠性下界。
+
+对每个 snapshot 执行 leave-one-out 重估计：
+
+$$
+\hat{\mathbf h}_u^{(-p)}
+=
+\frac{
+\sum_{q\neq p}w_{u,q}\mathbf z_{u,q}
+}{
+\sum_{q\neq p}w_{u,q}
+},
+\qquad
+\hat{\mathbf a}_u^{(-p)}
+=
+\frac{\hat{\mathbf h}_u^{(-p)}}
+{\|\hat{\mathbf h}_u^{(-p)}\|}.
+$$
+
+方向扰动角为
+
+$$
+\theta_{u,p}
+=
+\arccos
+\left|
+(\hat{\mathbf a}_u^{(-p)})^H\hat{\mathbf a}_u
+\right|.
+$$
+
+观测不确定性取为
+
+$$
+\theta_u^{\mathrm{obs}}
+=
+\operatorname{Quantile}_{1-\alpha}
+\{\theta_{u,p}\}.
+$$
+
+同时，将 preamble snapshots 分为早期组和晚期组，估计方向漂移
+
+$$
+\theta_u^{\mathrm{drift}}
+=
+\arccos
+\left|
+(\hat{\mathbf a}_u^{\mathrm{early}})^H
+\hat{\mathbf a}_u^{\mathrm{late}}
+\right|.
+$$
+
+总置信角定义为
+
+$$
+\theta_u
+=
+\min
+\left\{
+\frac{\pi}{2},
+\theta_u^{\mathrm{obs}}
++
+\theta_u^{\mathrm{drift}}
++
+\theta_u^{\mathrm{RF}}
+\right\},
+$$
+
+其中 $\theta_u^{\mathrm{RF}}$ 表示射频校准残差裕量。目标信道可靠性下界为
+
+$$
+\boxed{
+L_u
+=
+\cos^2\theta_u.
+}
+$$
+
+### 5.7 干扰相干度上界
+
+对两个检测包 $u$ 和 $v$，估计方向夹角为
+
+$$
+\hat\theta_{uv}
+=
+\arccos
+\left|
+\hat{\mathbf a}_u^H\hat{\mathbf a}_v
+\right|.
+$$
+
+由于干扰包 $v$ 的方向也存在估计误差，其相对于目标方向的最大可能相干度上界为
+
+$$
+\boxed{
+U_{uv}
+=
+\cos^2
+\left(
+[\hat\theta_{uv}-\theta_v]_+
+\right).
+}
+$$
+
+对目标包 $u$，定义最强空间混淆上界
+
+$$
+U_u
+=
+\max_{v\neq u}U_{uv}.
+$$
+
+若 $U_u<L_u$，则目标方向与所有已检测干扰方向之间存在可靠分离间隔；否则，该包仍可解调，但反证权重必须由风险约束限制。
+
+### 5.8 包级反证权重
+
+前端将 $\hat E_u$、$L_u$、$U_{uv}$ 和 $\hat\sigma^2$ 传递给第 4 章的权重选择器。对每个目标—干扰对，定义保守 margin
+
+$$
+\underline A_{uv}
+=
+\hat E_uL_u-
+\hat E_vU_{uv},
+$$
+
+$$
+\underline B_{uv}
+=
+\hat E_v(1-U_{uv})-
+\hat E_u(1-L_u).
+$$
+
+$\underline A_{uv}$ 表示目标方向支持项的保守优势，$\underline B_{uv}$ 表示正交反证项的保守优势。包级权重通过有界 max-min 目标选择：
+
+$$
+\lambda_u^\star
+=
+\arg\max_{0\leq\lambda\leq\lambda_{u,\mathrm{cap}}}
+\min_{v\neq u}
+\frac{
+\underline A_{uv}+
+\lambda\underline B_{uv}
+}{
+\sqrt{
+\overline C_{0,uv}+
+\lambda^2\overline C_{2,uv}
+}
+}.
+$$
+
+其中 $\lambda_{u,\mathrm{cap}}$ 由目标方向可靠性给出，例如
+
+$$
+\lambda_{u,\mathrm{cap}}
+=
+\min
+\left\{
+\lambda_{\max},
+\frac{L_u-\gamma}{1-L_u}
+\right\}.
+$$
+
+该权重在包级更新，payload 中所有 symbols 共享同一个 $\lambda_u^\star$。这样，前端输出的不仅是同步和信道点估计，还包括 SP-Dechirp 使用正交反证时所需的可靠性约束。
+
+### 5.9 输出与复杂度
+
+每个检测包输出
+
+$$
+\left\{
+\hat t_u,
+\hat\epsilon_u,
+\hat{\mathbf h}_u,
+\hat{\mathbf a}_u,
+\hat E_u,
+L_u,
+\{U_{uv}\}_{v\neq u},
+\hat\sigma^2,
+\lambda_u^\star
+\right\}.
+$$
+
+整体流程为：
+
+1. 双射频链校准、去直流和噪声预白化；
+2. 构造原始天线流和 PCA 投影流；
+3. 检测跨流重复的 preamble FFT 轨道；
+4. 用 sync/SFD 结构约束精修连续包起点和 CFO；
+5. 由前导 snapshots 鲁棒估计双天线信道；
+6. 估计信道方向置信角和干扰相干度上界；
+7. 选择包级反证权重 $\lambda_u^\star$；
+8. 将参数交给第 4 章的 signed spectrum 判决器。
+
+前导检测对每个滑动窗口执行常数数量的 LoRa FFT；同步和信道估计只使用固定数量的 preamble、sync 和 SFD symbols；相干度上界计算对 $U$ 个检测包的复杂度为 $O(U^2)$。包级 $\lambda$ 选择是一维有界优化，相对于 payload 阶段每包每符号的 $O(M\log M)$ FFT 开销较小。

@@ -1,0 +1,383 @@
+{
+  "schema": "sp_fig9_12_campaign_v1",
+  "campaign_id": "fig9_10_phy5_d025_r2_20s",
+  "run_id_revision": 2,
+  "phy_profile": {
+    "id": 5,
+    "sf": 10,
+    "bandwidth_hz": 250000,
+    "receiver_sample_rate_hz": 750000
+  },
+  "traffic_semantics": {
+    "scale_runs": "fixed per-node duty cycle; effective aggregate offered load is N*d",
+    "scale_per_node_duty_cycles": [
+      0.25
+    ],
+    "traffic_profile_ids": {
+      "0.25": 1
+    },
+    "encoding": {
+      "0.25": {
+        "3": 0.75,
+        "6": 1.5,
+        "9": 2.25,
+        "12": 3.0,
+        "15": 3.75
+      }
+    },
+    "firmware_rule": "CONFIG numActiveNodes equals popcount(activeMask)"
+  },
+  "decoder_mapping": {
+    "standard_lorawan": "lorawan (shared SP fine sync; fixed physical Ch0 top-1 payload decisions)",
+    "mrc": "mrc",
+    "cic": "cic",
+    "pcube": "pcube",
+    "maloragw": "maloragw",
+    "sp_decoder": "sp"
+  },
+  "fig11_timing_definition": "default campaign uses offline constructed 2/4/6/8-packet collisions and needs no RF run; report per-detected-packet payload-decoder wall time with native detection/synchronization excluded, and separately report end-to-end SER using every method's native frontend with frontend misses counted as SER=1",
+  "fig12_geometry": {
+    "coordinate_system": "gateway midpoint is (0,0); bearing is counter-clockwise from +x",
+    "bearing_deg": 0.0,
+    "rx_antenna_spacing_m": 0.5,
+    "node1_distance_m": 2.0,
+    "node_separations_m": [
+      0.02,
+      0.05,
+      0.1,
+      0.2,
+      0.3
+    ],
+    "node2_distances_m": [
+      2.02,
+      2.05,
+      2.1,
+      2.2,
+      2.3
+    ],
+    "schematic_only": true
+  },
+  "required_transfer": [
+    "control manifest JSON",
+    "raw dual-channel .sc16 IQ",
+    ".sc16.json capture metadata",
+    "six-method decoder report JSON",
+    "field record; Fig. 12 also needs photo and measured coordinates"
+  ],
+  "runs": [
+    {
+      "sequence": 1,
+      "phase": "scale",
+      "figure": "9,10",
+      "purpose": "end_to_end_prr_and_throughput",
+      "run_id": 251730209,
+      "phy_profile_id": 5,
+      "spreading_factor": 10,
+      "bandwidth_hz": 250000,
+      "active_nodes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "offered_load": 3.75,
+      "traffic_profile_load": 3.75,
+      "firmware_active_node_count": 15,
+      "per_node_duty_cycle": 0.25,
+      "duration_s": 20.0,
+      "warmup_s": 2.0,
+      "node_tx_power_dbm": 16,
+      "global_seed": 2074964446,
+      "payload_seed": 1294842810,
+      "round_index": 1,
+      "layout": "A",
+      "tags": {
+        "campaign": "fig9_10_phy5_d025_r2_20s",
+        "figure": "fig9_10",
+        "metric_group": "d0p25",
+        "round": "1",
+        "run_id_revision": "2",
+        "layout": "A",
+        "traffic_semantics": "fixed_per_node_duty_cycle",
+        "per_node_duty_cycle": "0.25",
+        "effective_aggregate_offered_load": "3.75"
+      },
+      "expected_tx_count": 398,
+      "expected_aggregate_rate_pps": 19.9,
+      "expected_per_node_rate_pps": 1.3266666666666667,
+      "predicted_packets_by_collision_order": {
+        "4": 33,
+        "7": 96,
+        "9": 19,
+        "8": 38,
+        "5": 94,
+        "6": 100,
+        "3": 16,
+        "2": 2
+      },
+      "recommended_capture_s": 50,
+      "artifacts": {
+        "control_manifest": "control_manifests/run_0f011921.json",
+        "iq": "runs/run_0f011921/run_0f011921.sc16",
+        "iq_metadata": "runs/run_0f011921/run_0f011921.sc16.json",
+        "decoder_report": "runs/run_0f011921/six_methods.json",
+        "field_record": "runs/run_0f011921/field_record.json"
+      },
+      "run_id_hex": "0x0F011921"
+    },
+    {
+      "sequence": 2,
+      "phase": "scale",
+      "figure": "9,10",
+      "purpose": "end_to_end_prr_and_throughput",
+      "run_id": 50403617,
+      "phy_profile_id": 5,
+      "spreading_factor": 10,
+      "bandwidth_hz": 250000,
+      "active_nodes": [
+        1,
+        2,
+        3
+      ],
+      "offered_load": 0.75,
+      "traffic_profile_load": 0.75,
+      "firmware_active_node_count": 3,
+      "per_node_duty_cycle": 0.25,
+      "duration_s": 20.0,
+      "warmup_s": 2.0,
+      "node_tx_power_dbm": 16,
+      "global_seed": 4155357150,
+      "payload_seed": 3240983994,
+      "round_index": 1,
+      "layout": "A",
+      "tags": {
+        "campaign": "fig9_10_phy5_d025_r2_20s",
+        "figure": "fig9_10",
+        "metric_group": "d0p25",
+        "round": "1",
+        "run_id_revision": "2",
+        "layout": "A",
+        "traffic_semantics": "fixed_per_node_duty_cycle",
+        "per_node_duty_cycle": "0.25",
+        "effective_aggregate_offered_load": "0.75"
+      },
+      "expected_tx_count": 78,
+      "expected_aggregate_rate_pps": 3.9,
+      "expected_per_node_rate_pps": 1.3,
+      "predicted_packets_by_collision_order": {
+        "1": 23,
+        "2": 52,
+        "3": 3
+      },
+      "recommended_capture_s": 50,
+      "artifacts": {
+        "control_manifest": "control_manifests/run_03011921.json",
+        "iq": "runs/run_03011921/run_03011921.sc16",
+        "iq_metadata": "runs/run_03011921/run_03011921.sc16.json",
+        "decoder_report": "runs/run_03011921/six_methods.json",
+        "field_record": "runs/run_03011921/field_record.json"
+      },
+      "run_id_hex": "0x03011921"
+    },
+    {
+      "sequence": 3,
+      "phase": "scale",
+      "figure": "9,10",
+      "purpose": "end_to_end_prr_and_throughput",
+      "run_id": 100735265,
+      "phy_profile_id": 5,
+      "spreading_factor": 10,
+      "bandwidth_hz": 250000,
+      "active_nodes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "offered_load": 1.5,
+      "traffic_profile_load": 1.5,
+      "firmware_active_node_count": 6,
+      "per_node_duty_cycle": 0.25,
+      "duration_s": 20.0,
+      "warmup_s": 2.0,
+      "node_tx_power_dbm": 16,
+      "global_seed": 1387128158,
+      "payload_seed": 1680682810,
+      "round_index": 1,
+      "layout": "A",
+      "tags": {
+        "campaign": "fig9_10_phy5_d025_r2_20s",
+        "figure": "fig9_10",
+        "metric_group": "d0p25",
+        "round": "1",
+        "run_id_revision": "2",
+        "layout": "A",
+        "traffic_semantics": "fixed_per_node_duty_cycle",
+        "per_node_duty_cycle": "0.25",
+        "effective_aggregate_offered_load": "1.5"
+      },
+      "expected_tx_count": 163,
+      "expected_aggregate_rate_pps": 8.15,
+      "expected_per_node_rate_pps": 1.3583333333333334,
+      "predicted_packets_by_collision_order": {
+        "3": 56,
+        "4": 44,
+        "1": 11,
+        "2": 35,
+        "5": 17
+      },
+      "recommended_capture_s": 50,
+      "artifacts": {
+        "control_manifest": "control_manifests/run_06011921.json",
+        "iq": "runs/run_06011921/run_06011921.sc16",
+        "iq_metadata": "runs/run_06011921/run_06011921.sc16.json",
+        "decoder_report": "runs/run_06011921/six_methods.json",
+        "field_record": "runs/run_06011921/field_record.json"
+      },
+      "run_id_hex": "0x06011921"
+    },
+    {
+      "sequence": 4,
+      "phase": "scale",
+      "figure": "9,10",
+      "purpose": "end_to_end_prr_and_throughput",
+      "run_id": 151066913,
+      "phy_profile_id": 5,
+      "spreading_factor": 10,
+      "bandwidth_hz": 250000,
+      "active_nodes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "offered_load": 2.25,
+      "traffic_profile_load": 2.25,
+      "firmware_active_node_count": 9,
+      "per_node_duty_cycle": 0.25,
+      "duration_s": 20.0,
+      "warmup_s": 2.0,
+      "node_tx_power_dbm": 16,
+      "global_seed": 3182236382,
+      "payload_seed": 2335037626,
+      "round_index": 1,
+      "layout": "A",
+      "tags": {
+        "campaign": "fig9_10_phy5_d025_r2_20s",
+        "figure": "fig9_10",
+        "metric_group": "d0p25",
+        "round": "1",
+        "run_id_revision": "2",
+        "layout": "A",
+        "traffic_semantics": "fixed_per_node_duty_cycle",
+        "per_node_duty_cycle": "0.25",
+        "effective_aggregate_offered_load": "2.25"
+      },
+      "expected_tx_count": 245,
+      "expected_aggregate_rate_pps": 12.25,
+      "expected_per_node_rate_pps": 1.3611111111111112,
+      "predicted_packets_by_collision_order": {
+        "4": 95,
+        "5": 73,
+        "3": 59,
+        "2": 9,
+        "1": 3,
+        "6": 6
+      },
+      "recommended_capture_s": 50,
+      "artifacts": {
+        "control_manifest": "control_manifests/run_09011921.json",
+        "iq": "runs/run_09011921/run_09011921.sc16",
+        "iq_metadata": "runs/run_09011921/run_09011921.sc16.json",
+        "decoder_report": "runs/run_09011921/six_methods.json",
+        "field_record": "runs/run_09011921/field_record.json"
+      },
+      "run_id_hex": "0x09011921"
+    },
+    {
+      "sequence": 5,
+      "phase": "scale",
+      "figure": "9,10",
+      "purpose": "end_to_end_prr_and_throughput",
+      "run_id": 201398561,
+      "phy_profile_id": 5,
+      "spreading_factor": 10,
+      "bandwidth_hz": 250000,
+      "active_nodes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "offered_load": 3.0,
+      "traffic_profile_load": 3.0,
+      "firmware_active_node_count": 12,
+      "per_node_duty_cycle": 0.25,
+      "duration_s": 20.0,
+      "warmup_s": 2.0,
+      "node_tx_power_dbm": 16,
+      "global_seed": 414007390,
+      "payload_seed": 774736442,
+      "round_index": 1,
+      "layout": "A",
+      "tags": {
+        "campaign": "fig9_10_phy5_d025_r2_20s",
+        "figure": "fig9_10",
+        "metric_group": "d0p25",
+        "round": "1",
+        "run_id_revision": "2",
+        "layout": "A",
+        "traffic_semantics": "fixed_per_node_duty_cycle",
+        "per_node_duty_cycle": "0.25",
+        "effective_aggregate_offered_load": "3"
+      },
+      "expected_tx_count": 315,
+      "expected_aggregate_rate_pps": 15.75,
+      "expected_per_node_rate_pps": 1.3125,
+      "predicted_packets_by_collision_order": {
+        "7": 40,
+        "8": 8,
+        "4": 83,
+        "3": 42,
+        "5": 90,
+        "2": 7,
+        "6": 45
+      },
+      "recommended_capture_s": 50,
+      "artifacts": {
+        "control_manifest": "control_manifests/run_0c011921.json",
+        "iq": "runs/run_0c011921/run_0c011921.sc16",
+        "iq_metadata": "runs/run_0c011921/run_0c011921.sc16.json",
+        "decoder_report": "runs/run_0c011921/six_methods.json",
+        "field_record": "runs/run_0c011921/field_record.json"
+      },
+      "run_id_hex": "0x0C011921"
+    }
+  ]
+}

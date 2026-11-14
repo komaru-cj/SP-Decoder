@@ -1,0 +1,10 @@
+lambda,objective,category,sources
+0.0,-0.6143287179816924,boundary,boundary_low
+0.072982474562,8.645392487745771e-14,analytic,pair_3_flip
+0.961183572725,5.4813318363461265,analytic,pair_2_stat
+1.0,5.601077042243831,coverage,fixed_checkpoint_0.25
+1.892238121606,5.885635263604659,analytic,pair_1_stat
+2.0,5.883513611731836,coverage,fixed_checkpoint_0.50
+2.144263133418,5.875029018896683,midpoint,reliable_polarity_midpoint
+3.0,5.722100019669745,coverage,fixed_checkpoint_0.75
+4.0,5.242516182013004,boundary,boundary_cap

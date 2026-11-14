@@ -1,0 +1,320 @@
+{
+  "schema": "sp_decode_real_collision_run_v1",
+  "created_utc": "2026-08-06T11:26:45.799136+00:00",
+  "experiment": {
+    "bandwidth_hz": "250000",
+    "business_duration_s": "20",
+    "campaign": "fig13_fig15_outdoor_sf8_sf10_sf12_bw250_d025_r6_20s",
+    "decode_window": "middle_10s",
+    "figure": "fig13",
+    "layout": "OUTDOOR_SCALE",
+    "merge_group": "sf12_bw250k",
+    "merge_source": "true",
+    "metric": "decoder_prr_by_sf",
+    "per_node_duty_cycle": "0.25",
+    "physical_node_count": "12",
+    "spreading_factor": "12"
+  },
+  "config": {
+    "run_id": 201417057,
+    "active_mask": 4095,
+    "num_active_nodes": 12,
+    "phy_profile_id": 6,
+    "traffic_profile_id": 1,
+    "node_tx_power_dbm": 16,
+    "duration_ms": 20000,
+    "warmup_ms": 2000,
+    "global_seed": 4138387226,
+    "payload_seed": 3223981438,
+    "flags": 0,
+    "offered_load": 3.0,
+    "per_node_duty_cycle": 0.25,
+    "sf": 12,
+    "bandwidth_hz": 250000
+  },
+  "active_nodes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "active_node_count": 12,
+  "radio": {
+    "frequency_hz": 487700000,
+    "phy_profile_id": 6,
+    "sample_rate_hz": 750000,
+    "bandwidth_hz": 250000,
+    "spreading_factor": 12,
+    "coding_rate": "4/5",
+    "preamble_symbols": 8,
+    "explicit_header": true,
+    "phy_crc": true,
+    "sync_word": 52
+  },
+  "traffic": {
+    "data_payload_bytes": 20,
+    "packet_airtime_ms": 659.4559999999999,
+    "firmware_active_node_count": 12,
+    "profile_offered_load": 3.0,
+    "per_node_duty_cycle": 0.25,
+    "effective_aggregate_offered_load": 3.0,
+    "expected_per_node_rate_pps": 0.37910034937888204,
+    "mean_idle_gap_ms": 1978.3679999999997,
+    "firmware_mean_idle_gap_ms": 1980
+  },
+  "expected_node_schedules": {
+    "1": {
+      "tx_count": 8,
+      "tx_start_ms_from_traffic_begin": [
+        2561,
+        6497,
+        7861,
+        12350,
+        13826,
+        17072,
+        18211,
+        19574
+      ]
+    },
+    "2": {
+      "tx_count": 7,
+      "tx_start_ms_from_traffic_begin": [
+        1412,
+        7493,
+        11587,
+        12465,
+        13202,
+        18154,
+        19310
+      ]
+    },
+    "3": {
+      "tx_count": 11,
+      "tx_start_ms_from_traffic_begin": [
+        1562,
+        2237,
+        5040,
+        7135,
+        8050,
+        9435,
+        10198,
+        11460,
+        13010,
+        17924,
+        19067
+      ]
+    },
+    "4": {
+      "tx_count": 7,
+      "tx_start_ms_from_traffic_begin": [
+        227,
+        3561,
+        6379,
+        11276,
+        15322,
+        16557,
+        18723
+      ]
+    },
+    "5": {
+      "tx_count": 6,
+      "tx_start_ms_from_traffic_begin": [
+        2186,
+        6284,
+        9839,
+        10928,
+        11996,
+        18628
+      ]
+    },
+    "6": {
+      "tx_count": 9,
+      "tx_start_ms_from_traffic_begin": [
+        780,
+        2608,
+        5147,
+        6365,
+        8176,
+        9491,
+        10960,
+        16504,
+        17297
+      ]
+    },
+    "7": {
+      "tx_count": 8,
+      "tx_start_ms_from_traffic_begin": [
+        1411,
+        2307,
+        5025,
+        10152,
+        11844,
+        13731,
+        15901,
+        17598
+      ]
+    },
+    "8": {
+      "tx_count": 5,
+      "tx_start_ms_from_traffic_begin": [
+        2432,
+        3292,
+        6967,
+        10700,
+        15645
+      ]
+    },
+    "9": {
+      "tx_count": 8,
+      "tx_start_ms_from_traffic_begin": [
+        391,
+        3141,
+        7001,
+        8009,
+        11346,
+        12256,
+        13798,
+        18492
+      ]
+    },
+    "10": {
+      "tx_count": 8,
+      "tx_start_ms_from_traffic_begin": [
+        114,
+        3733,
+        6162,
+        12390,
+        14214,
+        15572,
+        16617,
+        19322
+      ]
+    },
+    "11": {
+      "tx_count": 9,
+      "tx_start_ms_from_traffic_begin": [
+        1165,
+        2768,
+        5561,
+        6770,
+        8000,
+        13493,
+        14418,
+        15753,
+        19285
+      ]
+    },
+    "12": {
+      "tx_count": 7,
+      "tx_start_ms_from_traffic_begin": [
+        1206,
+        3594,
+        5186,
+        7589,
+        10407,
+        13298,
+        14459
+      ]
+    }
+  },
+  "control": {
+    "config_frame_hex": "5350020122006161010cff0f0c060110204e0000d00700001ac7aaf67e0d2ac0c140",
+    "config_crc16": 16577,
+    "config_repeat": 5,
+    "config_interval_s": 1.0,
+    "start_frame_size": 18,
+    "start_airtime_s": 0.32972799999999997,
+    "start_repeat": 5,
+    "start_interval_s": 0.6,
+    "start_arm_delay_s": 4.0,
+    "start_delay_semantics": "start_delay_ms is measured from the receiver's completed START frame to the shared NODE_WARMUP begin time",
+    "usrp_device_args": "",
+    "usrp_tx_gain_db": 300.0,
+    "antenna": "TX/RX",
+    "control_phy": {
+      "sample_rate_hz": 1000000,
+      "bandwidth_hz": 125000,
+      "spreading_factor": 10,
+      "coding_rate": "4/5",
+      "sync_word": 52
+    }
+  },
+  "events": [
+    {
+      "type": "CONFIG_ENQUEUED",
+      "index": 1,
+      "utc": "2026-08-06T11:27:00.323860+00:00"
+    },
+    {
+      "type": "CONFIG_ENQUEUED",
+      "index": 2,
+      "utc": "2026-08-06T11:27:01.327796+00:00"
+    },
+    {
+      "type": "CONFIG_ENQUEUED",
+      "index": 3,
+      "utc": "2026-08-06T11:27:02.333572+00:00"
+    },
+    {
+      "type": "CONFIG_ENQUEUED",
+      "index": 4,
+      "utc": "2026-08-06T11:27:03.341640+00:00"
+    },
+    {
+      "type": "CONFIG_ENQUEUED",
+      "index": 5,
+      "utc": "2026-08-06T11:27:04.446437+00:00"
+    },
+    {
+      "type": "START_ENQUEUED",
+      "index": 1,
+      "utc": "2026-08-06T11:27:08.455484+00:00",
+      "start_delay_ms": 3667,
+      "frame_hex": "5350020212016161010cc140530e0000e3e1",
+      "target_warmup_begin_utc": "2026-08-06T11:27:12.452364+00:00"
+    },
+    {
+      "type": "START_ENQUEUED",
+      "index": 2,
+      "utc": "2026-08-06T11:27:09.060644+00:00",
+      "start_delay_ms": 3062,
+      "frame_hex": "5350020212016161010cc140f60b0000205c",
+      "target_warmup_begin_utc": "2026-08-06T11:27:12.452364+00:00"
+    },
+    {
+      "type": "START_ENQUEUED",
+      "index": 3,
+      "utc": "2026-08-06T11:27:09.666215+00:00",
+      "start_delay_ms": 2456,
+      "frame_hex": "5350020212016161010cc14098090000c8c9",
+      "target_warmup_begin_utc": "2026-08-06T11:27:12.452364+00:00"
+    },
+    {
+      "type": "START_ENQUEUED",
+      "index": 4,
+      "utc": "2026-08-06T11:27:10.276422+00:00",
+      "start_delay_ms": 1846,
+      "frame_hex": "5350020212016161010cc14036070000e59a",
+      "target_warmup_begin_utc": "2026-08-06T11:27:12.452364+00:00"
+    },
+    {
+      "type": "START_ENQUEUED",
+      "index": 5,
+      "utc": "2026-08-06T11:27:10.881386+00:00",
+      "start_delay_ms": 1241,
+      "frame_hex": "5350020212016161010cc140d9040000b193",
+      "target_warmup_begin_utc": "2026-08-06T11:27:12.452364+00:00"
+    }
+  ],
+  "expected_warmup_begin_utc": "2026-08-06T11:27:12.452364+00:00",
+  "expected_traffic_begin_utc": "2026-08-06T11:27:14.452364+00:00",
+  "expected_capture_end_utc": "2026-08-06T11:27:37.452364+00:00"
+}

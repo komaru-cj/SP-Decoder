@@ -1,0 +1,245 @@
+From 68ac4397067869dd782f4c4c1494cd43aa7c1c56 Mon Sep 17 00:00:00 2001
+From: Jose Alamos <jose@alamos.cc>
+Date: Thu, 18 Jul 2024 17:35:03 +0200
+Subject: [PATCH] separate sync, demod and decode
+
+---
+ BEC/zlecc_check_message_crc.m | 21 ++++++++++++++-------
+ BEC/zlecc_gen_common.m        |  2 +-
+ Thrive/zvl_decode_pkt_bits.m  |  2 +-
+ Thrive/zvl_epoch_process.m    |  2 +-
+ Thrive/zvl_init.m             |  2 +-
+ TnBDecode.m                   | 31 +++++++++++++++++++++++++++++++
+ TnBDemod.m                    | 28 ++++++++++++++++++++++++++++
+ TnBMain.m                     | 24 ++++++++++++++++++------
+ TnBSync.m                     | 25 +++++++++++++++++++++++++
+ 9 files changed, 120 insertions(+), 17 deletions(-)
+ create mode 100644 TnBDecode.m
+ create mode 100644 TnBDemod.m
+ create mode 100644 TnBSync.m
+
+diff --git a/BEC/zlecc_check_message_crc.m b/BEC/zlecc_check_message_crc.m
+index 7bdf5af..4aa5af2 100644
+--- a/BEC/zlecc_check_message_crc.m
++++ b/BEC/zlecc_check_message_crc.m
+@@ -4,10 +4,17 @@
+ 
+ function crcpassed = zlecc_check_message_crc(zlecc_found_pkt,pld_length)
+ 
+-actmsg = zlecc_found_pkt(1:pld_length-2);
+-CRC_dbl_b4wht = zlecc_16_bit_crc(actmsg,pld_length);
+-tempp = [actmsg, CRC_dbl_b4wht];
+-tempp1 = zlecc_white(tempp);
+-CRC_dbl = tempp1((end-1:end));
+-CRC_read = zlecc_found_pkt(pld_length-1:pld_length);
+-crcpassed = (sum(abs(double(CRC_dbl)-double(CRC_read))) == 0);
++if pld_length > size(zlecc_found_pkt,2)
++    pld_length = size(zlecc_found_pkt,2);
++end
++if pld_length > 3
++    actmsg = zlecc_found_pkt(1:pld_length-2);
++    CRC_dbl_b4wht = zlecc_16_bit_crc(actmsg,pld_length);
++    tempp = [actmsg, CRC_dbl_b4wht];
++    tempp1 = zlecc_white(tempp);
++    CRC_dbl = tempp1((end-1:end));
++    CRC_read = zlecc_found_pkt(pld_length-1:pld_length);
++    crcpassed = (sum(abs(double(CRC_dbl)-double(CRC_read))) == 0);
++else
++    crcpassed = 0;
++end
+diff --git a/BEC/zlecc_gen_common.m b/BEC/zlecc_gen_common.m
+index 04d76af..b8484dd 100644
+--- a/BEC/zlecc_gen_common.m
++++ b/BEC/zlecc_gen_common.m
+@@ -105,4 +105,4 @@ for www=1:size(hereallcomb,1)
+     end
+     heregroup = [heregroup; toadd];
+ end
+-zlecc_common_cfg.CR4_2_group = heregroup;
+\ No newline at end of file
++zlecc_common_cfg.CR4_2_group = heregroup;
+diff --git a/Thrive/zvl_decode_pkt_bits.m b/Thrive/zvl_decode_pkt_bits.m
+index 8984135..2deb33b 100644
+--- a/Thrive/zvl_decode_pkt_bits.m
++++ b/Thrive/zvl_decode_pkt_bits.m
+@@ -26,4 +26,4 @@ function [zvl_pkt_pass_CRC_flag, zvl_found_pkt,zvl_additional_corrected] = zvl_d
+     end
+     if zvl_pkt_pass_CRC_flag
+         zvl_found_pkt = zlecc_found_pkt(1:pld_length);
+-    end
+\ No newline at end of file
++    end
+diff --git a/Thrive/zvl_epoch_process.m b/Thrive/zvl_epoch_process.m
+index 26ee4e7..1c3e25b 100644
+--- a/Thrive/zvl_epoch_process.m
++++ b/Thrive/zvl_epoch_process.m
+@@ -88,4 +88,4 @@ if size(epoch_info,1) > 0
+     end
+ end
+ found_LoRa_pkt_out = found_LoRa_pkt;
+-found_LoRa_pkt_time_out = found_LoRa_pkt_time;
+\ No newline at end of file
++found_LoRa_pkt_time_out = found_LoRa_pkt_time;
+diff --git a/Thrive/zvl_init.m b/Thrive/zvl_init.m
+index b19f62b..dc03593 100644
+--- a/Thrive/zvl_init.m
++++ b/Thrive/zvl_init.m
+@@ -62,4 +62,4 @@ elseif BW <= 250000
+ elseif BW <= 500000
+     zvl_cfg.peakmasklen = 3;    
+ end
+-zvl_cfg.peakmasklen = max(exp_oneside_L, zvl_cfg.peakmasklen);
+\ No newline at end of file
++zvl_cfg.peakmasklen = max(exp_oneside_L, zvl_cfg.peakmasklen);
+diff --git a/TnBDecode.m b/TnBDecode.m
+new file mode 100644
+index 0000000..cc16d0a
+--- /dev/null
++++ b/TnBDecode.m
+@@ -0,0 +1,31 @@
++% Copyright (C) 2022 
++% Florida State University 
++% All Rights Reserved
++
++% FOR EDUCATION AND ADADEMIC RESEARCH ONLY 
++
++function [decoded_packets, CRC_ok] = TnBDemod(TraceName, SF, decoder_type)
++
++BW = 125000; % NOT USED
++
++addpath ./Thrive
++addpath ./BEC
++addpath ./loracode
++addpath ./peakfinder
++
++zvl_init;
++
++load(TraceName)
++syms = double(syms);
++mat = syms;
++total = 0;
++decoded_packets = {};
++CRC_ok = [];
++for i = 1:size(mat,1)
++    curr = mat(i,:);
++    [CRC, zvl_found_pkt, zvl_additional_corrected] = zvl_decode_pkt_bits(curr, SF, decoder_type);
++    total = total + CRC;
++    CRC_ok = [CRC_ok CRC];
++    decoded_packets{end+1} = zvl_found_pkt;
++end
++end
+diff --git a/TnBDemod.m b/TnBDemod.m
+new file mode 100644
+index 0000000..7f87d04
+--- /dev/null
++++ b/TnBDemod.m
+@@ -0,0 +1,28 @@
++% Copyright (C) 2022 
++% Florida State University 
++% All Rights Reserved
++
++% FOR EDUCATION AND ADADEMIC RESEARCH ONLY 
++
++function [found_LoRa_pkt] = TnBDemod(SF, BW, found_LoRa_pkt_start_time, found_LoRa_pkt_CFO)
++
++addpath ./Thrive
++addpath ./BEC
++addpath ./loracode
++addpath ./peakfinder
++
++thisfile = fopen(TraceName); A = fread(thisfile, 'int16'); fclose(thisfile); 
++zvl_LoRa_time_sig = A(1:2:end) + 1i*A(2:2:end); 
++
++A = [];
++zvl_LoRa_time_sig = transpose(zvl_LoRa_time_sig); 
++
++OSF = 8;
++
++zvl_init;
++
++load('found_LoRa_pkt_CFO.mat')
++load('found_LoRa_pkt_start_time.mat')
++[rcvsig,rcvdownchirpsig] = zvl_cal_rcvsig(BW, SF, OSF, zvl_cfg, found_LoRa_pkt_start_time, found_LoRa_pkt_CFO, zvl_LoRa_time_sig);
++found_LoRa_pkt = zvl_decode_found_pkts(BW, SF, OSF, zvl_cfg, found_LoRa_pkt_start_time,found_LoRa_pkt_CFO, rcvsig, rcvdownchirpsig);
++end
+diff --git a/TnBMain.m b/TnBMain.m
+index cdc5175..32b7b15 100644
+--- a/TnBMain.m
++++ b/TnBMain.m
+@@ -4,24 +4,36 @@
+ 
+ % FOR EDUCATION AND ADADEMIC RESEARCH ONLY 
+ 
+-TraceName = '../AEexpdata/outdoor1-SF8-CR4'; 
+-SF = 8;
++TraceName = getenv("INPUT_FILE")
++output_file = getenv("OUTPUT_FILE");
++sync_file = getenv("SYNC_FILE")
++
++SF = str2num(getenv("SF"));
++BW = str2num(getenv("BW"))
+ 
+ addpath ./Thrive
+ addpath ./BEC
+ addpath ./loracode
+ addpath ./peakfinder
+ 
+-thisfile = fopen(TraceName); A = fread(thisfile, 'int16'); fclose(thisfile); 
+-zvl_LoRa_time_sig = A(1:2:end) + 1i*A(2:2:end); A = []; zvl_LoRa_time_sig = transpose(zvl_LoRa_time_sig); 
++thisfile = fopen(TraceName); A = fread(thisfile, 'int16=>single'); fclose(thisfile); 
++zvl_LoRa_time_sig = A(1:2:end) + 1i*A(2:2:end); 
++
++A = [];
++zvl_LoRa_time_sig = transpose(zvl_LoRa_time_sig); 
+ 
+ OSF = 8;
+-BW = 125000;
+ 
+ zvl_init;
+ 
+-[found_LoRa_pkt_start_time, found_LoRa_pkt_CFO] = zvl_detect_pkt(BW, SF, OSF, zvl_cfg, zvl_LoRa_time_sig);
++if isempty(sync_file)
++    [found_LoRa_pkt_start_time, found_LoRa_pkt_CFO] = zvl_detect_pkt(BW, SF, OSF, zvl_cfg, zvl_LoRa_time_sig);
++else
++    disp("Loading sync from mat file")
++    load(sync_file)
++end
+ [rcvsig,rcvdownchirpsig] = zvl_cal_rcvsig(BW, SF, OSF, zvl_cfg, found_LoRa_pkt_start_time, found_LoRa_pkt_CFO, zvl_LoRa_time_sig);
+ found_LoRa_pkt = zvl_decode_found_pkts(BW, SF, OSF, zvl_cfg, found_LoRa_pkt_start_time,found_LoRa_pkt_CFO, rcvsig, rcvdownchirpsig);
+ 
++save(output_file, 'found_LoRa_pkt')
+ TnB_ReportResults;    
+diff --git a/TnBSync.m b/TnBSync.m
+new file mode 100644
+index 0000000..5ba553c
+--- /dev/null
++++ b/TnBSync.m
+@@ -0,0 +1,25 @@
++% Copyright (C) 2022 
++% Florida State University 
++% All Rights Reserved
++
++% FOR EDUCATION AND ADADEMIC RESEARCH ONLY 
++
++function [found_LoRa_pkt_start_time, found_LoRa_pkt_CFO] = TnBSync(TraceName, SF, BW)
++
++addpath ./Thrive
++addpath ./BEC
++addpath ./loracode
++addpath ./peakfinder
++
++thisfile = fopen(TraceName); A = fread(thisfile, 'int16=>single'); fclose(thisfile); 
++zvl_LoRa_time_sig = A(1:2:end) + 1i*A(2:2:end); 
++
++A = [];
++zvl_LoRa_time_sig = transpose(zvl_LoRa_time_sig); 
++
++OSF = 8;
++
++zvl_init;
++
++[found_LoRa_pkt_start_time, found_LoRa_pkt_CFO] = zvl_detect_pkt(BW, SF, OSF, zvl_cfg, zvl_LoRa_time_sig);
++end
+-- 
+2.47.1
+

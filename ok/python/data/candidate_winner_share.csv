@@ -1,0 +1,9 @@
+policy,candidate_source,winner_count,winner_share_percent
+three_checkpoints,interval endpoints,16093,53.64333333
+three_checkpoints,pair-specific flip/peak points,11593,38.64333333
+three_checkpoints,adaptive midpoint,107,0.35666667
+three_checkpoints,three fixed uniform interior checkpoints,2207,7.35666667
+10000_checkpoints,interval endpoints,15654,52.18000000
+10000_checkpoints,pair-specific flip/peak points,10809,36.03000000
+10000_checkpoints,adaptive midpoint,0,0.00000000
+10000_checkpoints,"10,000 fixed uniform interior checkpoints",3537,11.79000000

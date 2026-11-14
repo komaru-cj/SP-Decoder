@@ -1,0 +1,39 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local tool state and credentials
+.agents/
+.codex/
+.aws/
+.env
+.env.*
+!.env.example
+
+# Raw recordings, numeric data, temporary files, and duplicate archives
+*.sc16
+*.sc16.*
+*.c64
+*.c64.*
+*.cf32
+*.fc32
+*.npy
+*.npz
+*.pkl
+*.tmp
+*.log
+*.zip
+
+# Generated experiment outputs; keep existing local files
+/real_usrp_outputs/
+/fig9_10_12_preview/
+/real_collision_experiment/runs/
+/real_collision_experiment/runs_outdoor/
+/real_collision_experiment/runs_outdoor1/
+/real_collision_experiment/analysis/*/
+/windows/analysis/*/

@@ -1,0 +1,4 @@
+experiment,x_value,x_label,report,nodes,offered_load,seed,power_gap_db,weak_node,layout,notes
+scale_n,4,N=4,real_collision_experiment/runs/run_04020002/n4_six_methods.json,4,2.0,0x11111111,,,A,existing example only
+environment,2,G=2,real_collision_experiment/runs/run_04020002/n4_six_methods.json,4,2.0,0x11111111,,,A,plot smoke only
+environment,2,G=2,real_collision_experiment/runs/run_04020002/n4_six_methods.json,4,2.0,0x11111111,,,B,plot smoke only

@@ -1,0 +1,243 @@
+{
+  "scope": "outdoor",
+  "setting": "SF10_BW250k",
+  "sf": 10,
+  "bandwidth_hz": 250000,
+  "node_count": 3,
+  "run": "run_03015161",
+  "analysis_dir": "/home/chengjing/real_usrp_experiment/real_collision_experiment/analysis/outdoor_fig13_10s",
+  "window_seconds": 10.0,
+  "method": "cora",
+  "method_label": "CoRa",
+  "merged": false,
+  "strict_window_s": 10.0,
+  "payload_bits": 160,
+  "manifest_expected_packet_count_in_analysis_window": 32,
+  "detected_packet_count": 19,
+  "decoded_success_packets": 12,
+  "prr_denominator_packets": 19,
+  "prr": 0.631578947368421,
+  "radio_window_tps_bps": 192.0,
+  "decoder_work_s": 0.6263342749999999,
+  "decoder_work_realtime_factor": 0.06263342749999999,
+  "effective_tps_bps": 192.0,
+  "metric_definition": {
+    "prr": "unique CRC-valid application payload identities / min(manifest-window expected packets, anonymous detected packets)",
+    "tps": "unique successful payload bits / max(strict radio window, summed serial post-shared-sync CoRa+TnB-BEC decoder work)",
+    "shared_fine_sync_excluded_from_decoder_work": true
+  },
+  "fine_sync": "/home/chengjing/real_usrp_experiment/real_collision_experiment/analysis/outdoor_fig13_10s/fine_sync/run_03015161.json",
+  "manifest": "/home/chengjing/real_usrp_experiment/real_collision_experiment/runs_outdoor/run_03015161/run_03015161.json",
+  "source_iq": "/home/chengjing/real_usrp_experiment/real_collision_experiment/runs_outdoor/run_03015161/run_03015161.sc16",
+  "posterior_grid": "/home/chengjing/real_usrp_experiment/compare/CoRa/upstream/cora_v2/artifacts/python/models/dist.pkl",
+  "posterior_grid_shape": [
+    200,
+    200
+  ],
+  "status_counts": {
+    "not_enough_symbols": 1,
+    "ok": 12,
+    "payload_crc_failed_after_bec": 6
+  },
+  "detector_stage_s": {
+    "argmax": 0.018881070000000003,
+    "bayesian_classifier": 0.027509953999999996,
+    "dechirp": 0.289243471,
+    "feature_extraction": 0.10901046799999999,
+    "preamble_peak_estimation": 0.083037352,
+    "total": 0.5337977020000001
+  },
+  "candidate_decoder_elapsed_ms": [
+    32.54181,
+    29.851803999999998,
+    32.882130000000004,
+    31.100369,
+    42.230416,
+    32.254873,
+    29.97345,
+    31.077727,
+    32.802959,
+    38.786095,
+    29.816377000000003,
+    29.366733999999997,
+    38.165583000000005,
+    40.449535000000004,
+    39.957541,
+    32.009373000000004,
+    31.144792000000002,
+    38.713077,
+    13.20963
+  ],
+  "decoded_identities": [
+    [
+      2,
+      10
+    ],
+    [
+      2,
+      11
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      3,
+      8
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      3,
+      10
+    ],
+    [
+      3,
+      11
+    ],
+    [
+      3,
+      12
+    ],
+    [
+      3,
+      13
+    ],
+    [
+      3,
+      14
+    ],
+    [
+      3,
+      15
+    ],
+    [
+      3,
+      16
+    ]
+  ],
+  "successful_candidates": [
+    {
+      "candidate_id": 0,
+      "node_id": 3,
+      "sequence": 7,
+      "source_payload_hex": "53500203615101030700000005010d4187057202",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 32.54181
+    },
+    {
+      "candidate_id": 1,
+      "node_id": 3,
+      "sequence": 8,
+      "source_payload_hex": "5350020361510103080000000501e2a0ba050fe0",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 29.851803999999998
+    },
+    {
+      "candidate_id": 2,
+      "node_id": 3,
+      "sequence": 9,
+      "source_payload_hex": "5350020361510103090000000501c380be05b284",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 32.882130000000004
+    },
+    {
+      "candidate_id": 3,
+      "node_id": 3,
+      "sequence": 10,
+      "source_payload_hex": "53500203615101030a0000000501a0e0b2057529",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 31.100369
+    },
+    {
+      "candidate_id": 5,
+      "node_id": 3,
+      "sequence": 11,
+      "source_payload_hex": "53500203615101030b000000050181c0b605c84d",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 32.254873
+    },
+    {
+      "candidate_id": 6,
+      "node_id": 3,
+      "sequence": 12,
+      "source_payload_hex": "53500203615101030c00000005016620aa05da62",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 29.97345
+    },
+    {
+      "candidate_id": 7,
+      "node_id": 2,
+      "sequence": 10,
+      "source_payload_hex": "53500202615101030a000000050178bfc9504506",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 31.077727
+    },
+    {
+      "candidate_id": 8,
+      "node_id": 2,
+      "sequence": 11,
+      "source_payload_hex": "53500202615101030b0000000501599fcd50f862",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 32.802959
+    },
+    {
+      "candidate_id": 10,
+      "node_id": 3,
+      "sequence": 13,
+      "source_payload_hex": "53500203615101030d00000005014700ae056706",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 29.816377000000003
+    },
+    {
+      "candidate_id": 11,
+      "node_id": 3,
+      "sequence": 14,
+      "source_payload_hex": "53500203615101030e00000005012460a205a0ab",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 29.366733999999997
+    },
+    {
+      "candidate_id": 15,
+      "node_id": 3,
+      "sequence": 15,
+      "source_payload_hex": "53500203615101030f00000005010540a6051dcf",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 32.009373000000004
+    },
+    {
+      "candidate_id": 16,
+      "node_id": 3,
+      "sequence": 16,
+      "source_payload_hex": "5350020361510103100000000501dba3d90565e6",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 31.144792000000002
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+experiment,x_value,x_label,report,nodes,offered_load,seed,power_gap_db,weak_node,layout,notes
+fig9_10_d0p25,15,N=15,runs/run_0f011921/six_methods.json,15,3.75,0x7BAD71DE,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25,3,N=3,runs/run_03011921/six_methods.json,3,0.75,0xF7ADB7DE,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25,6,N=6,runs/run_06011921/six_methods.json,6,1.5,0x52ADE55E,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25,9,N=9,runs/run_09011921/six_methods.json,9,2.25,0xBDAD12DE,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25,12,N=12,runs/run_0c011921/six_methods.json,12,3.0,0x18AD405E,,,A,end_to_end_prr_and_throughput

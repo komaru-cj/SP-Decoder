@@ -1,0 +1,142 @@
+{
+  "method": "MRC",
+  "paper_model": "maximum-ratio combining baseline",
+  "input": "/home/chengjing/real_usrp_experiment/real_usrp_outputs/synth_sp_pos01to10_moderate_offset5_15_seed11.npz",
+  "modes": {
+    "detected": {
+      "summary": {
+        "decoder": "MRC",
+        "packet_count": 10,
+        "symbol_count": 380,
+        "ser": 0.37105263157894736,
+        "pdr": 5,
+        "pdr_denominator": 10,
+        "success_ser_threshold": 0.2,
+        "mean_abs_start_error_samples": 27.178856162185912,
+        "mean_abs_cfo_convention_error_bins": 3.4
+      },
+      "packets": [
+        {
+          "packet_index": 0,
+          "source_index": 4,
+          "source_label": "pos02",
+          "start_sample": 24576.0,
+          "cfo_bins": -22.0,
+          "start_error_samples": -0.12857020277078846,
+          "cfo_error_bins": 0.0,
+          "channel_coherence": 0.999981351278411,
+          "ser": 0.0,
+          "success": true
+        },
+        {
+          "packet_index": 1,
+          "source_index": 25,
+          "source_label": "pos10",
+          "start_sample": 111240.0,
+          "cfo_bins": -25.0,
+          "start_error_samples": -48.448570202774135,
+          "cfo_error_bins": -6.0,
+          "channel_coherence": 0.9999941488021309,
+          "ser": 0.0,
+          "success": true
+        },
+        {
+          "packet_index": 2,
+          "source_index": 6,
+          "source_label": "pos03",
+          "start_sample": 215467.0,
+          "cfo_bins": -28.0,
+          "start_error_samples": -56.456570202775765,
+          "cfo_error_bins": -7.0,
+          "channel_coherence": 0.999978917952858,
+          "ser": 1.0,
+          "success": false
+        },
+        {
+          "packet_index": 3,
+          "source_index": 15,
+          "source_label": "pos06",
+          "start_sample": 302638.0,
+          "cfo_bins": -28.0,
+          "start_error_samples": -48.33657020278042,
+          "cfo_error_bins": -6.0,
+          "channel_coherence": 0.9990700315558211,
+          "ser": 0.9473684210526315,
+          "success": false
+        },
+        {
+          "packet_index": 4,
+          "source_index": 17,
+          "source_label": "pos07",
+          "start_sample": 385288.0,
+          "cfo_bins": -25.0,
+          "start_error_samples": -6.464570202748291,
+          "cfo_error_bins": -1.0,
+          "channel_coherence": 0.999995588944752,
+          "ser": 0.18421052631578946,
+          "success": true
+        },
+        {
+          "packet_index": 5,
+          "source_index": 9,
+          "source_label": "pos04",
+          "start_sample": 507659.0,
+          "cfo_bins": -22.0,
+          "start_error_samples": 33.399429797253106,
+          "cfo_error_bins": 4.0,
+          "channel_coherence": 0.9999347952894031,
+          "ser": 0.631578947368421,
+          "success": false
+        },
+        {
+          "packet_index": 6,
+          "source_index": 10,
+          "source_label": "pos05",
+          "start_sample": 606208.0,
+          "cfo_bins": -26.0,
+          "start_error_samples": -41.088570202700794,
+          "cfo_error_bins": -5.0,
+          "channel_coherence": 0.9991550912405766,
+          "ser": 0.2894736842105263,
+          "success": false
+        },
+        {
+          "packet_index": 7,
+          "source_index": 1,
+          "source_label": "pos01",
+          "start_sample": 724027.0,
+          "cfo_bins": -29.0,
+          "start_error_samples": -23.04857020266354,
+          "cfo_error_bins": -3.0,
+          "channel_coherence": 0.9999645021919185,
+          "ser": 0.0,
+          "success": true
+        },
+        {
+          "packet_index": 8,
+          "source_index": 20,
+          "source_label": "pos08",
+          "start_sample": 801432.0,
+          "cfo_bins": -25.0,
+          "start_error_samples": -7.872570202685893,
+          "cfo_error_bins": -1.0,
+          "channel_coherence": 0.9999950271068391,
+          "ser": 0.0,
+          "success": true
+        },
+        {
+          "packet_index": 9,
+          "source_index": 21,
+          "source_label": "pos09",
+          "start_sample": 913590.0,
+          "cfo_bins": -25.0,
+          "start_error_samples": -6.544570202706382,
+          "cfo_error_bins": -1.0,
+          "channel_coherence": 0.9999828373184416,
+          "ser": 0.6578947368421053,
+          "success": false
+        }
+      ]
+    }
+  }
+}

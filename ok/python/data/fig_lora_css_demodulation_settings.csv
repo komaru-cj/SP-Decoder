@@ -1,0 +1,7 @@
+key,value
+sf,9
+noise_std,0.018
+stft_window_samples,48
+stft_hop_samples,6
+energy_floor_db,-42
+random_seed,20260820

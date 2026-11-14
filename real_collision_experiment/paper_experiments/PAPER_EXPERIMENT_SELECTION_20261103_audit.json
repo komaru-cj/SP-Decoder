@@ -1,0 +1,35 @@
+{
+  "sources": {
+    "real_usrp_outputs/revision_heatmaps_A3_C1_guard_v2/per_target.csv": "a575ad9e1b65a7c5e6da163a9a715baf91bed5e8cb6ca6b16d97391fa6ba19c1",
+    "real_usrp_outputs/collision_boundary_fairness_20261102/per_target.csv": "b3b83258734a673a5113cd237b7b7d430ec234b23fcef458c5a387673b8dda2c"
+  },
+  "scope": "Post-hoc audit of frozen measured-IQ results; no new decode or acquisition; uncertainty does not represent independent deployments.",
+  "c1_all": {
+    "targets": 512,
+    "sp_only_success": 59,
+    "mrc_only_success": 0,
+    "lambda_zero": 399
+  },
+  "angle_below_10": {
+    "targets": 192,
+    "sp_only_success": 0,
+    "mrc_only_success": 0,
+    "lambda_zero": 189
+  },
+  "snr_at_most_minus20": {
+    "targets": 128,
+    "sp_only_success": 3,
+    "mrc_only_success": 0,
+    "lambda_zero": 112
+  },
+  "position07_k10_dense": {
+    "targets": 128,
+    "sp_success": 63,
+    "mrc_success": 103,
+    "sp_only_success": 1,
+    "mrc_only_success": 41,
+    "branch_counts": {
+      "retain_bounded_multiuser_branch": 128
+    }
+  }
+}

@@ -1,0 +1,11 @@
+experiment,x_value,x_label,report,nodes,offered_load,seed,power_gap_db,weak_node,layout,notes
+fig9_10_d0p25_bw125000,15,N=15,runs/run_0f012131/six_methods.json,15,3.75,0x9CE8386F,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25_bw125000,3,N=3,runs/run_03012131/six_methods.json,3,0.75,0x10E8FE6F,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25_bw125000,6,N=6,runs/run_06012131/six_methods.json,6,1.5,0xB5E8ACEF,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25_bw125000,9,N=9,runs/run_09012131/six_methods.json,9,2.25,0x5AE85B6F,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25_bw125000,12,N=12,runs/run_0c012131/six_methods.json,12,3.0,0xFFE809EF,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25_bw250000,3,N=3,runs/run_03015131/six_methods.json,3,0.75,0xDEE6696F,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25_bw250000,6,N=6,runs/run_06015131/six_methods.json,6,1.5,0x7BE63BEF,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25_bw250000,9,N=9,runs/run_09015131/six_methods.json,9,2.25,0x94E6CC6F,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25_bw250000,12,N=12,runs/run_0c015131/six_methods.json,12,3.0,0x31E69EEF,,,A,end_to_end_prr_and_throughput
+fig9_10_d0p25_bw250000,15,N=15,runs/run_0f015131/six_methods.json,15,3.75,0x52E6AF6F,,,A,end_to_end_prr_and_throughput

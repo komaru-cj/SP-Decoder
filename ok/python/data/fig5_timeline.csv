@@ -1,0 +1,12 @@
+packet_index,source_label,start_symbols,is_target
+0,pos10#0,0.0,1
+1,pos10#2,-7.0,0
+2,pos05#0,-4.0,0
+3,pos06#0,-1.0,0
+4,pos07#1,2.0,0
+5,pos09#1,5.0,0
+6,pos02#0,8.0,0
+7,pos03#2,11.0,0
+8,pos01#2,14.0,0
+9,pos04#1,17.0,0
+10,pos08#1,20.0,0

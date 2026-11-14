@@ -1,0 +1,730 @@
+{
+  "scope": "outdoor",
+  "setting": "SF8_BW250k",
+  "sf": 8,
+  "bandwidth_hz": 250000,
+  "node_count": 15,
+  "run": "run_0f014161",
+  "analysis_dir": "/home/chengjing/real_usrp_experiment/real_collision_experiment/analysis/outdoor_fig13_10s",
+  "window_seconds": 10.0,
+  "method": "cora",
+  "method_label": "CoRa",
+  "merged": false,
+  "strict_window_s": 10.0,
+  "payload_bits": 160,
+  "manifest_expected_packet_count_in_analysis_window": 714,
+  "detected_packet_count": 215,
+  "decoded_success_packets": 32,
+  "prr_denominator_packets": 215,
+  "prr": 0.14883720930232558,
+  "radio_window_tps_bps": 512.0,
+  "decoder_work_s": 4.459027367999999,
+  "decoder_work_realtime_factor": 0.4459027367999999,
+  "effective_tps_bps": 512.0,
+  "metric_definition": {
+    "prr": "unique CRC-valid application payload identities / min(manifest-window expected packets, anonymous detected packets)",
+    "tps": "unique successful payload bits / max(strict radio window, summed serial post-shared-sync CoRa+TnB-BEC decoder work)",
+    "shared_fine_sync_excluded_from_decoder_work": true
+  },
+  "fine_sync": "/home/chengjing/real_usrp_experiment/real_collision_experiment/analysis/outdoor_fig13_10s/fine_sync/run_0f014161.json",
+  "manifest": "/home/chengjing/real_usrp_experiment/real_collision_experiment/runs_outdoor/run_0f014161/run_0f014161.json",
+  "source_iq": "/home/chengjing/real_usrp_experiment/real_collision_experiment/runs_outdoor/run_0f014161/run_0f014161.sc16",
+  "posterior_grid": "/home/chengjing/real_usrp_experiment/compare/CoRa/upstream/cora_v2/artifacts/python/models/dist.pkl",
+  "posterior_grid_shape": [
+    200,
+    200
+  ],
+  "status_counts": {
+    "header_bec_failed": 16,
+    "not_enough_symbols": 1,
+    "ok": 33,
+    "payload_crc_failed_after_bec": 165
+  },
+  "detector_stage_s": {
+    "argmax": 0.064520719,
+    "bayesian_classifier": 0.08912639299999998,
+    "dechirp": 1.4419036120000015,
+    "feature_extraction": 0.2917061820000001,
+    "preamble_peak_estimation": 0.4434690540000001,
+    "total": 2.363090010999999
+  },
+  "candidate_decoder_elapsed_ms": [
+    14.096193,
+    24.163497999999997,
+    13.807815,
+    27.27526,
+    25.922857,
+    28.456376,
+    25.709543,
+    17.159578000000003,
+    11.382322,
+    27.742337,
+    21.611234,
+    25.790273,
+    26.223578,
+    21.983365000000003,
+    26.294629999999998,
+    23.457829999999998,
+    19.943451,
+    25.709524000000002,
+    13.717552,
+    23.468401,
+    14.8588,
+    21.007231,
+    22.971612999999998,
+    19.294296,
+    20.666647,
+    23.687499000000003,
+    23.861875,
+    24.389363,
+    27.615177000000003,
+    12.344472,
+    12.08124,
+    18.069381,
+    22.577811999999998,
+    22.819764,
+    24.946446,
+    24.510351999999997,
+    24.270528,
+    12.628712,
+    19.659156,
+    12.6739,
+    20.841010999999998,
+    11.914553,
+    19.538427000000002,
+    18.740008999999997,
+    23.509991,
+    20.047414999999997,
+    11.92403,
+    18.980957999999998,
+    22.252352,
+    19.469393,
+    22.012520000000002,
+    17.941041000000002,
+    22.327203,
+    11.577448,
+    21.986406,
+    13.870090999999999,
+    19.937018000000002,
+    12.742497,
+    19.628619,
+    20.201102,
+    28.612446,
+    22.623908,
+    24.067368,
+    25.242601,
+    20.596929,
+    20.506349,
+    24.188964,
+    23.521773,
+    11.644421,
+    24.891999000000002,
+    13.784122,
+    19.990415000000002,
+    23.231427999999998,
+    19.352939,
+    10.96369,
+    21.705554,
+    20.659067,
+    12.413472,
+    18.690635,
+    20.924906,
+    26.630001,
+    23.441254,
+    12.285779,
+    19.574938,
+    32.463708000000004,
+    20.278351,
+    24.822409,
+    19.663463,
+    25.173128,
+    24.017312,
+    22.082998999999997,
+    19.423651,
+    11.441476000000002,
+    27.572882,
+    20.7165,
+    23.941753,
+    26.028342,
+    24.740869,
+    24.912112999999998,
+    24.032191,
+    11.466285,
+    23.42074,
+    23.820206,
+    25.921591,
+    25.236901999999997,
+    25.263658000000003,
+    19.657873,
+    21.590789,
+    13.431213,
+    21.336886,
+    27.370418,
+    24.805169,
+    25.09111,
+    25.156659,
+    12.567836,
+    21.09098,
+    25.97958,
+    14.567264999999999,
+    25.026145,
+    25.53346,
+    26.244772,
+    13.416127,
+    21.540199,
+    27.973081,
+    24.840287,
+    12.100444999999999,
+    24.233845,
+    18.072993,
+    20.644032,
+    21.925353,
+    11.837885,
+    20.526684,
+    13.971446,
+    21.337595,
+    26.027997,
+    22.921217000000002,
+    28.188448,
+    30.165734,
+    28.988301,
+    27.198271,
+    13.894364,
+    13.40594,
+    13.339831,
+    11.73292,
+    22.952205,
+    23.614204,
+    14.696815,
+    25.543301,
+    23.375388,
+    23.410829,
+    22.920733,
+    16.864132,
+    25.287475,
+    19.851507,
+    25.358163,
+    21.857739000000002,
+    21.936349,
+    22.878311,
+    13.97508,
+    22.769553000000002,
+    22.032708000000003,
+    24.904434,
+    13.014427,
+    11.030998,
+    20.552854,
+    27.208508,
+    24.551258999999998,
+    23.738857,
+    20.642983,
+    25.90789,
+    24.231189999999998,
+    16.291317,
+    13.291875999999998,
+    19.03966,
+    19.497239,
+    11.940106,
+    11.039575,
+    11.679848,
+    20.348225,
+    24.862886,
+    26.137642,
+    13.90897,
+    23.010111,
+    20.82704,
+    20.594979,
+    19.794143000000002,
+    19.975535,
+    11.738165,
+    25.310105,
+    23.158642999999998,
+    22.046742000000002,
+    24.291964999999998,
+    29.019441999999998,
+    22.443544,
+    12.61614,
+    20.110010000000003,
+    23.585835,
+    23.455621999999998,
+    23.151358000000002,
+    19.767954,
+    19.429192,
+    22.552909,
+    23.36455,
+    11.929974,
+    22.592277,
+    18.393428,
+    19.999712,
+    20.174949,
+    23.071698,
+    23.831752,
+    12.552095,
+    22.819476,
+    19.621620999999998,
+    21.479119,
+    7.161445
+  ],
+  "decoded_identities": [
+    [
+      2,
+      34
+    ],
+    [
+      2,
+      52
+    ],
+    [
+      2,
+      57
+    ],
+    [
+      2,
+      59
+    ],
+    [
+      2,
+      63
+    ],
+    [
+      2,
+      66
+    ],
+    [
+      2,
+      67
+    ],
+    [
+      5,
+      31
+    ],
+    [
+      5,
+      49
+    ],
+    [
+      5,
+      53
+    ],
+    [
+      5,
+      65
+    ],
+    [
+      6,
+      52
+    ],
+    [
+      8,
+      31
+    ],
+    [
+      8,
+      42
+    ],
+    [
+      8,
+      50
+    ],
+    [
+      8,
+      52
+    ],
+    [
+      8,
+      53
+    ],
+    [
+      8,
+      55
+    ],
+    [
+      8,
+      58
+    ],
+    [
+      8,
+      63
+    ],
+    [
+      10,
+      26
+    ],
+    [
+      10,
+      29
+    ],
+    [
+      10,
+      30
+    ],
+    [
+      10,
+      35
+    ],
+    [
+      10,
+      43
+    ],
+    [
+      10,
+      47
+    ],
+    [
+      15,
+      32
+    ],
+    [
+      15,
+      35
+    ],
+    [
+      15,
+      43
+    ],
+    [
+      15,
+      44
+    ],
+    [
+      15,
+      64
+    ],
+    [
+      15,
+      68
+    ]
+  ],
+  "successful_candidates": [
+    {
+      "candidate_id": 18,
+      "node_id": 15,
+      "sequence": 32,
+      "source_payload_hex": "5350020f6141010f200000000401191cedde9168",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.717552
+    },
+    {
+      "candidate_id": 30,
+      "node_id": 8,
+      "sequence": 31,
+      "source_payload_hex": "535002086141010f1f0000000401668763380050",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.08124
+    },
+    {
+      "candidate_id": 31,
+      "node_id": 15,
+      "sequence": 35,
+      "source_payload_hex": "5350020f6141010f2300000004017a7ce1de56c5",
+      "bec_crc_attempts": 22,
+      "bec_total_candidate_schedules": 25,
+      "bec_additionally_corrected_codewords": 11,
+      "decoder_elapsed_ms": 18.069381
+    },
+    {
+      "candidate_id": 37,
+      "node_id": 10,
+      "sequence": 26,
+      "source_payload_hex": "5350020a6141010f1a0000000401966a9e07a500",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.628712
+    },
+    {
+      "candidate_id": 39,
+      "node_id": 2,
+      "sequence": 34,
+      "source_payload_hex": "535002026141010f220000000401431cdb12730e",
+      "bec_crc_attempts": 4,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 3,
+      "decoder_elapsed_ms": 12.6739
+    },
+    {
+      "candidate_id": 53,
+      "node_id": 10,
+      "sequence": 29,
+      "source_payload_hex": "5350020a6141010f1d0000000401718a8207b72f",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.577448
+    },
+    {
+      "candidate_id": 55,
+      "node_id": 10,
+      "sequence": 30,
+      "source_payload_hex": "5350020a6141010f1e000000040112ea8e077082",
+      "bec_crc_attempts": 4,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 4,
+      "decoder_elapsed_ms": 13.870090999999999
+    },
+    {
+      "candidate_id": 57,
+      "node_id": 5,
+      "sequence": 31,
+      "source_payload_hex": "535002056141010f1f00000004015109e56b3cc4",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.742497
+    },
+    {
+      "candidate_id": 68,
+      "node_id": 15,
+      "sequence": 43,
+      "source_payload_hex": "5350020f6141010f2b0000000401727dc0de3908",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.644421
+    },
+    {
+      "candidate_id": 70,
+      "node_id": 15,
+      "sequence": 44,
+      "source_payload_hex": "5350020f6141010f2c0000000401959ddcde2b27",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.784122
+    },
+    {
+      "candidate_id": 77,
+      "node_id": 10,
+      "sequence": 35,
+      "source_payload_hex": "5350020a6141010f230000000401ec4d7d0759e4",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 3,
+      "decoder_elapsed_ms": 12.413472
+    },
+    {
+      "candidate_id": 92,
+      "node_id": 8,
+      "sequence": 42,
+      "source_payload_hex": "535002086141010f2a00000004019021b13846fb",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.441476000000002
+    },
+    {
+      "candidate_id": 108,
+      "node_id": 10,
+      "sequence": 43,
+      "source_payload_hex": "5350020a6141010f2b0000000401e44c5c073629",
+      "bec_crc_attempts": 4,
+      "bec_total_candidate_schedules": 125,
+      "bec_additionally_corrected_codewords": 9,
+      "decoder_elapsed_ms": 13.431213
+    },
+    {
+      "candidate_id": 117,
+      "node_id": 6,
+      "sequence": 52,
+      "source_payload_hex": "535002066141010f34000000040173f55e5e840d",
+      "bec_crc_attempts": 12,
+      "bec_total_candidate_schedules": 25,
+      "bec_additionally_corrected_codewords": 2,
+      "decoder_elapsed_ms": 14.567264999999999
+    },
+    {
+      "candidate_id": 121,
+      "node_id": 2,
+      "sequence": 52,
+      "source_payload_hex": "535002026141010f340000000401b4de8112d98e",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 5,
+      "decoder_elapsed_ms": 13.416127
+    },
+    {
+      "candidate_id": 125,
+      "node_id": 5,
+      "sequence": 49,
+      "source_payload_hex": "535002056141010f310000000401fdcc586bd7c4",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.100444999999999
+    },
+    {
+      "candidate_id": 127,
+      "node_id": 8,
+      "sequence": 50,
+      "source_payload_hex": "535002086141010f320000000401a922d2382cfd",
+      "bec_crc_attempts": 24,
+      "bec_total_candidate_schedules": 625,
+      "bec_additionally_corrected_codewords": 12,
+      "decoder_elapsed_ms": 18.072993
+    },
+    {
+      "candidate_id": 132,
+      "node_id": 10,
+      "sequence": 47,
+      "source_payload_hex": "5350020a6141010f2f000000040160cc4c07e3ab",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.971446
+    },
+    {
+      "candidate_id": 140,
+      "node_id": 2,
+      "sequence": 57,
+      "source_payload_hex": "535002026141010f390000000401197fb412dea5",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.894364
+    },
+    {
+      "candidate_id": 141,
+      "node_id": 8,
+      "sequence": 52,
+      "source_payload_hex": "535002086141010f3400000004016fe2ca3883b6",
+      "bec_crc_attempts": 4,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 2,
+      "decoder_elapsed_ms": 13.40594
+    },
+    {
+      "candidate_id": 142,
+      "node_id": 5,
+      "sequence": 53,
+      "source_payload_hex": "535002056141010f350000000401794c486b0246",
+      "bec_crc_attempts": 2,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 1,
+      "decoder_elapsed_ms": 13.339831
+    },
+    {
+      "candidate_id": 143,
+      "node_id": 2,
+      "sequence": 59,
+      "source_payload_hex": "535002026141010f3b00000004015b3fbc12a46c",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.73292
+    },
+    {
+      "candidate_id": 146,
+      "node_id": 15,
+      "sequence": 64,
+      "source_payload_hex": "5350020f6141010f400000000401bf1061dfdcd5",
+      "bec_crc_attempts": 5,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 3,
+      "decoder_elapsed_ms": 14.696815
+    },
+    {
+      "candidate_id": 151,
+      "node_id": 8,
+      "sequence": 53,
+      "source_payload_hex": "535002086141010f3500000004014ec2ce383ed2",
+      "bec_crc_attempts": 10,
+      "bec_total_candidate_schedules": 25,
+      "bec_additionally_corrected_codewords": 8,
+      "decoder_elapsed_ms": 16.864132
+    },
+    {
+      "candidate_id": 158,
+      "node_id": 8,
+      "sequence": 55,
+      "source_payload_hex": "535002086141010f3700000004010c82c638441b",
+      "bec_crc_attempts": 2,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 5,
+      "decoder_elapsed_ms": 13.97508
+    },
+    {
+      "candidate_id": 162,
+      "node_id": 2,
+      "sequence": 63,
+      "source_payload_hex": "535002026141010f3f0000000401dfbfac1271ee",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.014427
+    },
+    {
+      "candidate_id": 171,
+      "node_id": 2,
+      "sequence": 66,
+      "source_payload_hex": "535002026141010f420000000401e51057133eb3",
+      "bec_crc_attempts": 3,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 6,
+      "decoder_elapsed_ms": 16.291317
+    },
+    {
+      "candidate_id": 172,
+      "node_id": 2,
+      "sequence": 66,
+      "source_payload_hex": "535002026141010f420000000401e51057133eb3",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.291875999999998
+    },
+    {
+      "candidate_id": 175,
+      "node_id": 2,
+      "sequence": 67,
+      "source_payload_hex": "535002026141010f430000000401c430531383d7",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.940106
+    },
+    {
+      "candidate_id": 176,
+      "node_id": 8,
+      "sequence": 58,
+      "source_payload_hex": "535002086141010f3a0000000401a123f3384330",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 3,
+      "decoder_elapsed_ms": 11.039575
+    },
+    {
+      "candidate_id": 181,
+      "node_id": 15,
+      "sequence": 68,
+      "source_payload_hex": "5350020f6141010f4400000004013b9071df0957",
+      "bec_crc_attempts": 3,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 3,
+      "decoder_elapsed_ms": 13.90897
+    },
+    {
+      "candidate_id": 203,
+      "node_id": 5,
+      "sequence": 65,
+      "source_payload_hex": "535002056141010f4100000004016ac2966a9fb2",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.929974
+    },
+    {
+      "candidate_id": 210,
+      "node_id": 8,
+      "sequence": 63,
+      "source_payload_hex": "535002086141010f3f00000004010483e7382bd6",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.552095
+    }
+  ]
+}

@@ -1,0 +1,730 @@
+{
+  "scope": "outdoor",
+  "setting": "SF8_BW250k",
+  "sf": 8,
+  "bandwidth_hz": 250000,
+  "node_count": 12,
+  "run": "run_0c014161",
+  "analysis_dir": "/home/chengjing/real_usrp_experiment/real_collision_experiment/analysis/outdoor_fig13_10s",
+  "window_seconds": 10.0,
+  "method": "cora",
+  "method_label": "CoRa",
+  "merged": false,
+  "strict_window_s": 10.0,
+  "payload_bits": 160,
+  "manifest_expected_packet_count_in_analysis_window": 586,
+  "detected_packet_count": 226,
+  "decoded_success_packets": 32,
+  "prr_denominator_packets": 226,
+  "prr": 0.1415929203539823,
+  "radio_window_tps_bps": 512.0,
+  "decoder_work_s": 4.623825205999998,
+  "decoder_work_realtime_factor": 0.46238252059999974,
+  "effective_tps_bps": 512.0,
+  "metric_definition": {
+    "prr": "unique CRC-valid application payload identities / min(manifest-window expected packets, anonymous detected packets)",
+    "tps": "unique successful payload bits / max(strict radio window, summed serial post-shared-sync CoRa+TnB-BEC decoder work)",
+    "shared_fine_sync_excluded_from_decoder_work": true
+  },
+  "fine_sync": "/home/chengjing/real_usrp_experiment/real_collision_experiment/analysis/outdoor_fig13_10s/fine_sync/run_0c014161.json",
+  "manifest": "/home/chengjing/real_usrp_experiment/real_collision_experiment/runs_outdoor/run_0c014161/run_0c014161.json",
+  "source_iq": "/home/chengjing/real_usrp_experiment/real_collision_experiment/runs_outdoor/run_0c014161/run_0c014161.sc16",
+  "posterior_grid": "/home/chengjing/real_usrp_experiment/compare/CoRa/upstream/cora_v2/artifacts/python/models/dist.pkl",
+  "posterior_grid_shape": [
+    200,
+    200
+  ],
+  "status_counts": {
+    "header_bec_failed": 27,
+    "ok": 32,
+    "payload_crc_failed_after_bec": 167
+  },
+  "detector_stage_s": {
+    "argmax": 0.06258005000000004,
+    "bayesian_classifier": 0.08673669799999999,
+    "dechirp": 1.55940995,
+    "feature_extraction": 0.30307424999999993,
+    "preamble_peak_estimation": 0.44877660900000016,
+    "total": 2.494754697
+  },
+  "candidate_decoder_elapsed_ms": [
+    27.275354,
+    22.315675,
+    11.852361,
+    19.944059,
+    14.50896,
+    26.577913000000002,
+    23.698726,
+    24.350116,
+    26.006836,
+    20.195545,
+    27.339867,
+    36.494381,
+    26.294984,
+    18.188981,
+    13.440351999999999,
+    24.656257,
+    24.204271,
+    18.969924,
+    18.606499,
+    22.627866,
+    23.007244,
+    21.800397,
+    23.509258000000003,
+    12.136203,
+    18.779653,
+    20.419987,
+    21.714899,
+    16.000698,
+    27.483003999999998,
+    10.975964,
+    23.873581,
+    19.814053,
+    12.829234,
+    20.691099,
+    22.115959,
+    24.195226,
+    12.36628,
+    19.02072,
+    23.135842,
+    22.845563,
+    24.208088999999998,
+    20.593138,
+    22.406556000000002,
+    18.364407999999997,
+    19.123874,
+    25.02997,
+    18.961423,
+    22.484606,
+    23.430494,
+    25.602522,
+    27.572603,
+    23.748646,
+    19.43632,
+    23.716490999999998,
+    10.570051000000001,
+    25.747835,
+    11.098868,
+    10.673683,
+    19.870815,
+    22.226724,
+    20.359751999999997,
+    11.725729000000001,
+    24.609463,
+    20.151663,
+    20.470513999999998,
+    25.133456,
+    13.973364,
+    19.053574,
+    23.758142,
+    25.655814999999997,
+    16.726529,
+    23.470222999999997,
+    29.853281,
+    23.081478999999998,
+    21.882167000000003,
+    23.892021999999997,
+    27.429563,
+    14.986546,
+    16.738269,
+    14.818822,
+    20.294464,
+    22.188992000000002,
+    13.131654,
+    12.081135999999999,
+    18.112990999999997,
+    10.902583,
+    20.963974,
+    22.787281,
+    23.026509,
+    19.797674,
+    11.008353,
+    24.472471,
+    24.18108,
+    23.248344,
+    19.675870000000003,
+    13.638655,
+    23.210477,
+    20.228571000000002,
+    18.13422,
+    24.581628000000002,
+    24.736554,
+    27.039326,
+    26.453824,
+    14.590686,
+    23.517724,
+    23.312227,
+    24.521302,
+    11.475923,
+    24.001275,
+    20.144769,
+    11.935466,
+    12.597605,
+    24.898683000000002,
+    22.739698999999998,
+    24.6472,
+    25.122707000000002,
+    24.322374,
+    19.774659,
+    22.789592000000003,
+    23.679392,
+    19.540573,
+    23.309625,
+    11.530867,
+    19.491169,
+    13.34409,
+    20.942236,
+    24.660020000000003,
+    19.323644,
+    19.217194,
+    21.522615,
+    25.327311,
+    19.931907,
+    12.96903,
+    24.349893,
+    12.277506,
+    16.806298,
+    11.767944,
+    23.509362999999997,
+    24.790709,
+    23.297644,
+    23.336173000000002,
+    12.340119,
+    13.494019,
+    22.998456,
+    18.202871,
+    22.72041,
+    14.141903000000001,
+    23.321544,
+    21.483544000000002,
+    20.72611,
+    11.657245,
+    11.243663,
+    22.777434,
+    11.474662,
+    23.564704,
+    22.738538,
+    23.522456000000002,
+    11.496770999999999,
+    22.532918,
+    25.39388,
+    23.862547000000003,
+    11.041139,
+    16.22118,
+    21.414542,
+    12.143816,
+    22.750905,
+    20.152154,
+    12.175996999999999,
+    19.911749,
+    27.117871,
+    25.046546,
+    20.990275999999998,
+    20.536549,
+    21.109296999999998,
+    19.108655,
+    25.279783000000002,
+    25.445661,
+    25.511623,
+    19.515372,
+    23.941114,
+    23.218045,
+    26.106879,
+    13.671519,
+    22.642965,
+    11.569856999999999,
+    13.08263,
+    10.629131,
+    20.166857,
+    11.591875,
+    24.938278,
+    24.567284,
+    22.866228,
+    23.879941,
+    22.949261,
+    22.373834,
+    23.766325000000002,
+    20.497219,
+    20.208153,
+    19.96808,
+    22.31488,
+    11.418186,
+    20.043826,
+    11.939302000000001,
+    25.385315,
+    18.917265999999998,
+    21.192885,
+    24.948489000000002,
+    12.051565,
+    22.060994,
+    75.80442799999999,
+    13.078828000000001,
+    12.924709,
+    23.729461999999998,
+    22.781254,
+    11.087932,
+    13.269493,
+    24.433692999999998,
+    23.309586,
+    14.839928,
+    16.164456,
+    24.330994,
+    25.954060000000002,
+    19.520348,
+    11.033371,
+    20.316502,
+    27.056065
+  ],
+  "decoded_identities": [
+    [
+      2,
+      25
+    ],
+    [
+      2,
+      28
+    ],
+    [
+      2,
+      30
+    ],
+    [
+      2,
+      43
+    ],
+    [
+      2,
+      45
+    ],
+    [
+      2,
+      46
+    ],
+    [
+      2,
+      53
+    ],
+    [
+      2,
+      54
+    ],
+    [
+      2,
+      57
+    ],
+    [
+      2,
+      60
+    ],
+    [
+      2,
+      64
+    ],
+    [
+      2,
+      66
+    ],
+    [
+      2,
+      71
+    ],
+    [
+      2,
+      72
+    ],
+    [
+      2,
+      74
+    ],
+    [
+      2,
+      75
+    ],
+    [
+      4,
+      51
+    ],
+    [
+      4,
+      55
+    ],
+    [
+      5,
+      38
+    ],
+    [
+      5,
+      66
+    ],
+    [
+      8,
+      27
+    ],
+    [
+      8,
+      32
+    ],
+    [
+      8,
+      39
+    ],
+    [
+      8,
+      48
+    ],
+    [
+      8,
+      51
+    ],
+    [
+      8,
+      56
+    ],
+    [
+      8,
+      62
+    ],
+    [
+      8,
+      64
+    ],
+    [
+      10,
+      39
+    ],
+    [
+      10,
+      62
+    ],
+    [
+      10,
+      64
+    ],
+    [
+      10,
+      65
+    ]
+  ],
+  "successful_candidates": [
+    {
+      "candidate_id": 2,
+      "node_id": 2,
+      "sequence": 25,
+      "source_payload_hex": "535002026141010c190000000401e32a00b2d2c1",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.852361
+    },
+    {
+      "candidate_id": 23,
+      "node_id": 2,
+      "sequence": 28,
+      "source_payload_hex": "535002026141010c1c0000000401468a14b2ba27",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.136203
+    },
+    {
+      "candidate_id": 24,
+      "node_id": 8,
+      "sequence": 27,
+      "source_payload_hex": "535002086141010c1b00000004017a564398f230",
+      "bec_crc_attempts": 20,
+      "bec_total_candidate_schedules": 25,
+      "bec_additionally_corrected_codewords": 4,
+      "decoder_elapsed_ms": 18.779653
+    },
+    {
+      "candidate_id": 27,
+      "node_id": 2,
+      "sequence": 30,
+      "source_payload_hex": "535002026141010c1e000000040104ca1cb2c0ee",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 16.000698
+    },
+    {
+      "candidate_id": 32,
+      "node_id": 5,
+      "sequence": 38,
+      "source_payload_hex": "535002056141010c260000000401b37f36cbe7c2",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.829234
+    },
+    {
+      "candidate_id": 61,
+      "node_id": 8,
+      "sequence": 32,
+      "source_payload_hex": "535002086141010c2000000004014231a898741d",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.725729000000001
+    },
+    {
+      "candidate_id": 70,
+      "node_id": 10,
+      "sequence": 39,
+      "source_payload_hex": "5350020a6141010c270000000401f09c5da7ab84",
+      "bec_crc_attempts": 4,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 5,
+      "decoder_elapsed_ms": 16.726529
+    },
+    {
+      "candidate_id": 79,
+      "node_id": 2,
+      "sequence": 43,
+      "source_payload_hex": "535002026141010c2b0000000401f26cceb28645",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 14.818822
+    },
+    {
+      "candidate_id": 82,
+      "node_id": 8,
+      "sequence": 39,
+      "source_payload_hex": "535002086141010c270000000401a5d1b4986632",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.131654
+    },
+    {
+      "candidate_id": 83,
+      "node_id": 2,
+      "sequence": 45,
+      "source_payload_hex": "535002026141010c2d000000040134acd6b2290e",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.081135999999999
+    },
+    {
+      "candidate_id": 90,
+      "node_id": 2,
+      "sequence": 46,
+      "source_payload_hex": "535002026141010c2e000000040157ccdab2eea3",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 1,
+      "decoder_elapsed_ms": 11.008353
+    },
+    {
+      "candidate_id": 122,
+      "node_id": 8,
+      "sequence": 48,
+      "source_payload_hex": "535002086141010c3000000004017333ea9871d6",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.530867
+    },
+    {
+      "candidate_id": 124,
+      "node_id": 2,
+      "sequence": 53,
+      "source_payload_hex": "535002026141010c3500000004010dafb5b24308",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.34409
+    },
+    {
+      "candidate_id": 132,
+      "node_id": 2,
+      "sequence": 54,
+      "source_payload_hex": "535002026141010c3600000004016ecfb9b284a5",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.96903
+    },
+    {
+      "candidate_id": 144,
+      "node_id": 8,
+      "sequence": 51,
+      "source_payload_hex": "535002086141010c3300000004011053e698b67b",
+      "bec_crc_attempts": 12,
+      "bec_total_candidate_schedules": 125,
+      "bec_additionally_corrected_codewords": 6,
+      "decoder_elapsed_ms": 18.202871
+    },
+    {
+      "candidate_id": 146,
+      "node_id": 5,
+      "sequence": 66,
+      "source_payload_hex": "535002056141010c42000000040191f3aaca7ffd",
+      "bec_crc_attempts": 5,
+      "bec_total_candidate_schedules": 5,
+      "bec_additionally_corrected_codewords": 4,
+      "decoder_elapsed_ms": 14.141903000000001
+    },
+    {
+      "candidate_id": 150,
+      "node_id": 2,
+      "sequence": 57,
+      "source_payload_hex": "535002026141010c390000000401812e84b2f947",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.657245
+    },
+    {
+      "candidate_id": 151,
+      "node_id": 4,
+      "sequence": 51,
+      "source_payload_hex": "535002046141010c3300000004019d7b9454637a",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.243663
+    },
+    {
+      "candidate_id": 161,
+      "node_id": 2,
+      "sequence": 60,
+      "source_payload_hex": "535002026141010c3c0000000401248e90b291a1",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.041139
+    },
+    {
+      "candidate_id": 162,
+      "node_id": 8,
+      "sequence": 56,
+      "source_payload_hex": "535002086141010c3800000004017b32cb981e1b",
+      "bec_crc_attempts": 14,
+      "bec_total_candidate_schedules": 25,
+      "bec_additionally_corrected_codewords": 6,
+      "decoder_elapsed_ms": 16.22118
+    },
+    {
+      "candidate_id": 167,
+      "node_id": 4,
+      "sequence": 55,
+      "source_payload_hex": "535002046141010c37000000040119fb8454b6f8",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 12.175996999999999
+    },
+    {
+      "candidate_id": 182,
+      "node_id": 2,
+      "sequence": 64,
+      "source_payload_hex": "535002026141010c4000000004013f016fb36398",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.671519
+    },
+    {
+      "candidate_id": 188,
+      "node_id": 2,
+      "sequence": 66,
+      "source_payload_hex": "535002026141010c4200000004017d4167b31951",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.591875
+    },
+    {
+      "candidate_id": 200,
+      "node_id": 2,
+      "sequence": 71,
+      "source_payload_hex": "535002026141010c470000000401d8e173b371b7",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.418186
+    },
+    {
+      "candidate_id": 202,
+      "node_id": 8,
+      "sequence": 62,
+      "source_payload_hex": "535002086141010c3e0000000401bdf2d398b150",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.939302000000001
+    },
+    {
+      "candidate_id": 207,
+      "node_id": 10,
+      "sequence": 62,
+      "source_payload_hex": "5350020a6141010c3e0000000401e8bf3aa77ce6",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 25,
+      "bec_additionally_corrected_codewords": 2,
+      "decoder_elapsed_ms": 12.051565
+    },
+    {
+      "candidate_id": 210,
+      "node_id": 2,
+      "sequence": 72,
+      "source_payload_hex": "535002026141010c48000000040137004eb30c55",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.078828000000001
+    },
+    {
+      "candidate_id": 214,
+      "node_id": 8,
+      "sequence": 64,
+      "source_payload_hex": "535002086141010c400000000401e43d249939a0",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.087932
+    },
+    {
+      "candidate_id": 215,
+      "node_id": 2,
+      "sequence": 74,
+      "source_payload_hex": "535002026141010c4a0000000401754046b3769c",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 13.269493
+    },
+    {
+      "candidate_id": 218,
+      "node_id": 10,
+      "sequence": 64,
+      "source_payload_hex": "5350020a6141010c400000000401b170cda6f416",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 14.839928
+    },
+    {
+      "candidate_id": 219,
+      "node_id": 10,
+      "sequence": 65,
+      "source_payload_hex": "5350020a6141010c4100000004019050c9a64972",
+      "bec_crc_attempts": 15,
+      "bec_total_candidate_schedules": 25,
+      "bec_additionally_corrected_codewords": 9,
+      "decoder_elapsed_ms": 16.164456
+    },
+    {
+      "candidate_id": 223,
+      "node_id": 2,
+      "sequence": 75,
+      "source_payload_hex": "535002026141010c4b0000000401546042b3cbf8",
+      "bec_crc_attempts": 1,
+      "bec_total_candidate_schedules": 1,
+      "bec_additionally_corrected_codewords": 0,
+      "decoder_elapsed_ms": 11.033371
+    }
+  ]
+}

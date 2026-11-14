@@ -1,0 +1,5 @@
+experiment,x_value,x_label,report,nodes,offered_load,seed,power_gap_db,weak_node,layout,notes
+scale_n,2,N=2,real_collision_experiment/runs/RUN/six_methods.json,2,1.5,1,,,A,replace RUN
+load_g,0.25,G=0.25,real_collision_experiment/runs/RUN/six_methods.json,15,0.25,1,,,A,replace RUN
+environment,1,G=1,real_collision_experiment/runs/RUN/six_methods.json,15,1,1,,,B,replace RUN
+near_far,0,gap=0 dB,real_collision_experiment/runs/RUN/six_methods.json,2,1.5,1,0,2,NF,replace RUN

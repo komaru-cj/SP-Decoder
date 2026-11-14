@@ -1,0 +1,5 @@
+scenario,component,start_sample,symbol_before,symbol_after,cfo_bins,amplitude,phase_rad
+single,target,0,73,73,0.0,1.00,0.00
+concurrent,target,0,73,73,0.0,0.74,0.00
+concurrent,interferer_a,108,174,128,1.70,1.08,1.10
+concurrent,interferer_b,286,26,197,-2.35,0.88,-1.40
